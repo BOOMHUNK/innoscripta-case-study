@@ -12,10 +12,9 @@ const transformer: TransformerFunction<NewsApiResponse> = (data) => {
     url: article.url,
     imageUrl: article.image || "",
     source: article.source?.title || "Unknown",
-    author: article.authors?.map((a) => a.name).join(", ") || "Unknown",
+    authors: article.authors?.map((a) => a.name) || [],
     publishedAt: article.dateTime,
-    category: article.categories?.map((c) => c.label) || [],
-  }));
+    category: [...new Set(article.categories?.flatMap((c) => c.uri.split("/")) || [])],  }));
 };
 
 export default transformer;

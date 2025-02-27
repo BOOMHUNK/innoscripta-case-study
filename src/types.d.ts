@@ -7,7 +7,7 @@ interface Article {
   imageUrl?: string;
   publishedAt: string;
   source: string;
-  author?: string;
+  authors?: string[];
   category?: string[];
 }
 
