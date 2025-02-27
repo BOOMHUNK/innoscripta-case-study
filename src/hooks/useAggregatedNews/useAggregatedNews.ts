@@ -4,14 +4,14 @@ import { fetchAggregatedNews } from "./aggregateFetch";
 import { ClientFactory } from "@/clients";
 import { RootState } from "@/store/store";
 
-const useAggregatedNews = (clients: ClientFactory<any>[]) => {
+const useAggregatedNews = (clients:  Set<ClientFactory<any>>) => {
   const newsFilters = useSelector((state: RootState) => state.news);
 
   return useInfiniteQuery({
     queryKey: ["aggregatedArticles", newsFilters],
     queryFn: async ({ pageParam = 1 }) => {
       return await fetchAggregatedNews(
-        clients,
+        Array.from(clients),
         newsFilters.queryString,
         newsFilters.pageSize,
         pageParam,

@@ -1,102 +1,48 @@
-import { useDispatch } from "react-redux";
-import {
-    setQueryString,
-    setCategories,
-    setSources,
-    setAuthors,
-    setStartDate,
-    setEndDate,
-} from "@/store/newsSlice";
-
-import "./style.css";
-import { NewsApiClient } from "@/clients";
+import { useRef } from "react";
 import { useAggregatedNews } from "@/hooks";
-import { useEffect, useRef } from "react";
-import timeAgo from "@/utils/timeAgo";
+import useInfiniteScrollObserver from "./hooks";
+import "./style.css";
+import ArticleCard, { ArticleCardSkeleton } from "../ArticleCard";
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
 
-export default function NewsFeed() {
-    const dispatch = useDispatch();
-    const clients = [NewsApiClient]; // We can add more clients here later
+
+
+
+type newsFeedProps = {
+
+}
+
+export default function NewsFeed({ }: newsFeedProps) {
+    // Get the clients set from Redux state
+    const clients = useSelector((state: RootState) => state.news.clients);
 
     const {
         data,
         hasNextPage,
         fetchNextPage,
-        isFetching, // 🚀 Track if new data is being fetched
+        isFetching, // Track if new data is being fetched
     } = useAggregatedNews(clients);
 
-    const observer = useRef<IntersectionObserver | null>(null);
-    const lastArticleRef = useRef<HTMLAnchorElement | null>(null);
 
-    useEffect(() => {
-        if (!lastArticleRef.current || !hasNextPage) return;
-        observer.current = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) {
-                console.log("Fetching next page...");
-                fetchNextPage();
-            }
-        });
-        observer.current.observe(lastArticleRef.current);
-        return () => observer.current?.disconnect();
-    }, [fetchNextPage, hasNextPage, data]);
+    // We use the useInfiniteScrollObserver custom hook to handle infinite scrolling
+    const lastArticleRef = useRef<HTMLAnchorElement | null>(null);
+    useInfiniteScrollObserver(lastArticleRef, fetchNextPage, hasNextPage, data);
 
     return (
         <div className="news-feed">
-        
 
             {/* News Articles */}
             <div className="container">
                 {data?.pages.map((page) =>
                     page.map((article, index) => (
-                        <a className="news-article" href={article.url} target="_blank" rel="noopener noreferrer" key={article.id} ref={index === page.length - 1 ? lastArticleRef : null}>
-                            <img onError={(e) => e.currentTarget.src = "/images/fallback-img.jpg"} src={article.imageUrl || ""} alt={article.title} className={`image ${!article.imageUrl ? "skeleton" : ""}`} />
-
-                            <div className="content">
-                                <h2 className={`title ${!article.title ? "skeleton" : ""}`}>{article.title || ""}</h2>
-                                <p className={`desc ${!article.description ? "skeleton" : ""}`}>{article.description || ""}</p>
-                                <span className="source"> {article.source}</span>
-                                <div className="dateAndAuthor">
-                                    <span className={`date ${!article.publishedAt ? "skeleton" : ""}`}> {article.publishedAt && timeAgo(article.publishedAt)}</span>
-                                    <span className={`author ${!article.authors ? "skeleton" : ""}`}>
-                                        <img src="/images/author.png" width={20} height={20} /> {article.authors && article.authors.length > 0 ? article.authors.join(", ") : "Unknown"}
-                                    </span>
-                                </div>
-                            </div>
-                            <span className="separator"></span>
-                            {
-                                article.category && article.category.length > 0 && <span className="category-container">
-                                    {
-                                        article.category.map((category, index) => (
-                                            index < 4 && category !== "dmoz" && (
-                                                <button key={category} onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    e.preventDefault();
-                                                }}
-                                                    className="category">{category}
-                                                </button>
-                                            )
-                                        ))
-                                    }
-                                </span>
-                            }
-                        </a>
+                        <ArticleCard key={article.id} article={article} ref={index === page.length - 1 ? lastArticleRef : null} />
                     ))
                 )}
 
-                {/*  Optimistic UI: Skeleton Placeholders When Fetching New Data */}
+                {/* Skeleton Placeholders When Fetching New Data */}
                 {isFetching && Array.from({ length: 10 }).map((_, i) => (
-                    <div className="news-article skeleton" key={`skeleton-${i}`}>
-                        <div className="image skeleton"></div>
-                        <div className="content">
-                            <h2 className="title skeleton"></h2>
-                            <p className="desc skeleton"></p>
-                            <span className="source"></span>
-                            <div className="dateAndAuthor">
-                                <span className="date skeleton"></span>
-                                <span className="author skeleton"></span>
-                            </div>
-                        </div>
-                    </div>
+                    <ArticleCardSkeleton key={`skeleton-${i}`} />
                 ))}
             </div>
         </div>

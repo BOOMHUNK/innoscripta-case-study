@@ -1,2 +1,4 @@
 import NewsFeed from "./NewsFeed";
-export { NewsFeed };
+import ArticleCard from "./ArticleCard";
+import Filters from "./Filters";
+export { NewsFeed, ArticleCard, Filters };
