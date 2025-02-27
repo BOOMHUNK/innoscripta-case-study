@@ -65,10 +65,10 @@
     min-height: 300px;
     display: block;
     /* &.skeleton { */
-      /* Skeleton loading effect */
-      background: linear-gradient(90deg, #f0f0f0 25%, #b4b4b4 50%, #f0f0f0 75%);
-      background-size: 200% 100%;
-      animation: loading 1.5s infinite;
+    /* Skeleton loading effect */
+    background: linear-gradient(90deg, #f0f0f0 25%, #b4b4b4 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
     /* } */
   }
 
@@ -200,7 +200,9 @@
       padding: 4px 8px;
       border-radius: 16px;
       font-size: 14px;
-
+      &.skeleton {
+        display: none;
+      }
       &::before {
         z-index: -1;
         content: "";

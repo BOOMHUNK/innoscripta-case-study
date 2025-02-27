@@ -1,2 +1,3 @@
+import useSelectedClients from "./useSelectedClients";
 import useAggregatedNews from "./useAggregatedNews";
-export { useAggregatedNews };
+export { useSelectedClients, useAggregatedNews };

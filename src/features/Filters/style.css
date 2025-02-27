@@ -1,0 +1,43 @@
+.filters {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: flex-start;
+
+  & .logo {
+    font-weight: 400;
+    letter-spacing: -0.25em;
+    font-size: 44px;
+    transform: translateX(32px) translateY(10px);
+  }
+  & .title {
+
+    /* margin-top: -16px; */
+    rotate: -90deg;
+    transform: translateY(-50px) translateX(-8px);
+  }
+
+  & .inputs-container {
+    padding: 0 32px;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    & input[type="text"], & input[type="date"] {
+      border-radius: 30px;
+      background: #e0e0e0;
+      box-shadow: inset 5px 5px 15px #b1b8bb, inset -5px -5px 15px #ffffff;
+      border-top: solid 1.5px #fff;
+      min-height: 48px;
+
+      font-size: 16px;
+      outline: none;
+      border: none;
+      padding: 4px 16px;
+    }
+  }
+}

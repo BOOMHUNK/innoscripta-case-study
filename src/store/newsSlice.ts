@@ -1,10 +1,10 @@
 // store/newsSlice.ts
-import { AvailableClients, ClientFactory } from "@/clients";
+import { AvailableClients } from "@/clients";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 interface NewsFiltersState {
-  clients: Set<ClientFactory<any>>;
+  clients: Set<string>; // Store only client names
   queryString: string;
   categories: string[];
   sources: string[];
@@ -13,8 +13,9 @@ interface NewsFiltersState {
   endDate: string;
   pageSize: number;
 }
+
 const initialState: NewsFiltersState = {
-  clients: new Set(Object.values(AvailableClients).flat()), // Initialize with all clients
+  clients: new Set(Object.keys(AvailableClients)), // Initialize with all clients
   queryString: "",
   categories: [],
   sources: [],
@@ -23,15 +24,14 @@ const initialState: NewsFiltersState = {
   endDate: "",
   pageSize: 10,
 };
-
 const newsSlice = createSlice({
   name: "news",
   initialState,
   reducers: {
-    addClient: (state, action: PayloadAction<ClientFactory<any>>) => {
+    addClient: (state, action: PayloadAction<string>) => {
       state.clients = new Set([...state.clients, action.payload]);
     },
-    removeClient: (state, action: PayloadAction<ClientFactory<any>>) => {
+    removeClient: (state, action: PayloadAction<string>) => {
       state.clients = new Set(
         [...state.clients].filter((client) => client !== action.payload)
       );
@@ -59,6 +59,7 @@ const newsSlice = createSlice({
     },
   },
 });
+
 
 export const {
   setQueryString,

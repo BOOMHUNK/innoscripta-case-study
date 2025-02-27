@@ -1,28 +1,20 @@
 import { useRef } from "react";
 import { useAggregatedNews } from "@/hooks";
 import useInfiniteScrollObserver from "./hooks";
-import "./style.css";
 import ArticleCard, { ArticleCardSkeleton } from "../ArticleCard";
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
-
-
-
+import "./style.css";
 
 type newsFeedProps = {
 
 }
 
 export default function NewsFeed({ }: newsFeedProps) {
-    // Get the clients set from Redux state
-    const clients = useSelector((state: RootState) => state.news.clients);
-
     const {
         data,
         hasNextPage,
         fetchNextPage,
         isFetching, // Track if new data is being fetched
-    } = useAggregatedNews(clients);
+    } = useAggregatedNews();
 
 
     // We use the useInfiniteScrollObserver custom hook to handle infinite scrolling
