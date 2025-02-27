@@ -6,13 +6,13 @@ import {
     setAuthors,
     setStartDate,
     setEndDate,
-} from "../../store/newsSlice";
+} from "@/store/newsSlice";
 
 import "./style.css";
-import { NewsApiClient } from "../../clients";
-import { useAggregatedNews } from "../../hooks";
+import { NewsApiClient } from "@/clients";
+import { useAggregatedNews } from "@/hooks";
 import { useEffect, useRef } from "react";
-import timeAgo from "../../utils/timeAgo";
+import timeAgo from "@/utils/timeAgo";
 
 export default function NewsFeed() {
     const dispatch = useDispatch();
@@ -42,17 +42,7 @@ export default function NewsFeed() {
 
     return (
         <div className="news-feed">
-            <h1 style={{ letterSpacing: "-0.19em" }}>NF</h1>
-
-            {/* Filter Inputs */}
-            <div className="filters">
-                <input type="text" placeholder="Search by keyword" onChange={(e) => dispatch(setQueryString(e.target.value))} />
-                <input type="text" placeholder="Filter by categories" onChange={(e) => dispatch(setCategories(e.target.value.split(",")))} />
-                <input type="text" placeholder="Filter by sources" onChange={(e) => dispatch(setSources(e.target.value.split(",")))} />
-                <input type="text" placeholder="Filter by authors" onChange={(e) => dispatch(setAuthors(e.target.value.split(",")))} />
-                <input type="date" placeholder="Start Date" onChange={(e) => dispatch(setStartDate(e.target.value))} />
-                <input type="date" placeholder="End Date" onChange={(e) => dispatch(setEndDate(e.target.value))} />
-            </div>
+        
 
             {/* News Articles */}
             <div className="container">

@@ -1,4 +1,4 @@
-import { ClientFactory } from "../../clients";
+import { ClientFactory } from "@/clients";
 
 /**
  * Fetches articles from multiple APIs using the provided clients and Redux filters.

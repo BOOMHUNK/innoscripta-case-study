@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MainLayout } from "./layouts";
-import { NewsFeed } from "./pages";
+import { Home } from "./pages";
 
 function App() {
   // Create a client
@@ -9,7 +9,7 @@ function App() {
     // Provide the client to our App
     <QueryClientProvider client={queryClient}>
       <MainLayout>
-        <NewsFeed />
+        <Home />
       </MainLayout>
     </QueryClientProvider>
   )

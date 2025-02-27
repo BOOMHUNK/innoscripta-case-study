@@ -14,7 +14,7 @@ const transformer: TransformerFunction<NewsApiResponse> = (data) => {
     source: article.source?.title || "Unknown",
     authors: article.authors?.map((a) => a.name) || [],
     publishedAt: article.dateTime,
-    category: [...new Set(article.categories?.flatMap((c) => c.uri.split("/")) || [])],  }));
+    category: [...new Set(article.categories?.flatMap((c) => c.label.split("/")) || [])],  }));
 };
 
 export default transformer;

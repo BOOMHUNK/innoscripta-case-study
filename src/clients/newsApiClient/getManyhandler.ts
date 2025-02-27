@@ -1,33 +1,8 @@
 import axios from "axios";
 import { NewsApiRequest, NewsApiResponse } from "./dto";
-// const articles = await NewsApiClient.getMany(
-//   "/article/getArticles",
-//   {
-//     action: "getArticles",
-//     keyword: ["Tesla Inc"],
-//     // keywordOper: "and",
-//     lang: ["eng"],
-//     // categoryUri: ["dmoz/Business"],
-//     // sourceUri: ["bbc.co.uk"],
-//     // authorUri: ["mark_mazzetti@nytimes.com"],
 
-//     articlesSortBy: "date",
-//     articlesSortByAsc: false,
-//     resultType: "articles",
-//     forceMaxDataTimeWindow: 31,
-//     includeArticleCategories: true,
-//     includeArticleImage: true,
-//     includeArticleAuthors: true,
 
-//     includeArticleConcepts: false,
-//     includeArticleSocialScore: false,
-//     includeArticleLocation: false,
-//   },
-//   10,
-//   1,
-// );
-
-const fetcher: GetManyHandler<NewsApiResponse> = async (
+const getManyhandler: GetManyHandler<NewsApiResponse> = async (
   endpoint,
   apiKey,
   queryString = "",
@@ -72,4 +47,4 @@ const fetcher: GetManyHandler<NewsApiResponse> = async (
 
   return response.data;
 };
-export default fetcher;
+export default getManyhandler;

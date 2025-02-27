@@ -1,4 +1,4 @@
-class ClientFactory<ResponseType> {
+export default class ClientFactory<ResponseType> {
   private apiToken: string;
   private baseUrl: string;
   private getManyEndpoint: string;
@@ -34,7 +34,7 @@ class ClientFactory<ResponseType> {
     filterAuthors?: string[]
   ): Promise<Article[]> {
     try {
-      const response = await this.getManyHandler(
+      const response: ResponseType = await this.getManyHandler(
         this.baseUrl + this.getManyEndpoint,
         this.apiToken,
         queryString,
@@ -60,4 +60,3 @@ class ClientFactory<ResponseType> {
   }
 }
 
-export default ClientFactory;

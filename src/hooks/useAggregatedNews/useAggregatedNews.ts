@@ -1,8 +1,8 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { ClientFactory } from "../../clients";
-import { fetchAggregatedNews } from "./aggregateFetch";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { fetchAggregatedNews } from "./aggregateFetch";
+import { ClientFactory } from "@/clients";
+import { RootState } from "@/store/store";
 
 const useAggregatedNews = (clients: ClientFactory<any>[]) => {
   const newsFilters = useSelector((state: RootState) => state.news);

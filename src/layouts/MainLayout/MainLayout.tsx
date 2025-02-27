@@ -5,5 +5,7 @@ type MainLayoutProps = {
 };
 
 export default function MainLayout({ children }: MainLayoutProps) {
-  return <div className="main-layout">{children}</div>;
+  return <div className="main-layout">
+    {children}
+  </div>;
 }
