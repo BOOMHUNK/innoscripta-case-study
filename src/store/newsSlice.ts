@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 interface NewsFiltersState {
-  clients: Set<string>; // Store only client names
+  clients: string[]; // Store only client names for serializability
   queryString: string;
   categories: string[];
   sources: string[];
@@ -15,7 +15,7 @@ interface NewsFiltersState {
 }
 
 const initialState: NewsFiltersState = {
-  clients: new Set(Object.keys(AvailableClients)), // Initialize with all clients
+  clients: Object.keys(AvailableClients), // Initialize with all clients
   queryString: "",
   categories: [],
   sources: [],
@@ -29,12 +29,12 @@ const newsSlice = createSlice({
   initialState,
   reducers: {
     addClient: (state, action: PayloadAction<string>) => {
-      state.clients = new Set([...state.clients, action.payload]);
+      if (!state.clients.includes(action.payload)) {
+        state.clients.push(action.payload); // ✅ Store as array, ensuring uniqueness
+      }
     },
     removeClient: (state, action: PayloadAction<string>) => {
-      state.clients = new Set(
-        [...state.clients].filter((client) => client !== action.payload)
-      );
+      state.clients = state.clients.filter((client) => client !== action.payload);
     },
     setQueryString: (state, action: PayloadAction<string>) => {
       state.queryString = action.payload;
