@@ -2,8 +2,8 @@ import { AvailableClients } from "./clients";
 
 export type Tag = {
   displayName: string;
-  clientsCompatibleValue: {
-    [clientName in keyof typeof AvailableClients]: string
+  clientsCompatibleValues: {
+    [clientName in keyof typeof AvailableClients]: string[];
   }
 }
 
@@ -23,7 +23,7 @@ export type Article = {
 
 
 export type FetchPostsHandler = (
-  clientName: keyof Tag["clientsCompatibleValue"],
+  clientName: keyof Tag["clientsCompatibleValues"],
   fullEndpointAddress: string,
   apiToken: string,
 
@@ -39,7 +39,7 @@ export type FetchPostsHandler = (
 
 
 export type FetchTagsHandler = (
-  clientName: keyof Tag["clientsCompatibleValue"],
+  clientName: keyof Tag["clientsCompatibleValues"],
   fullEndpointAddress: string,
   apiToken: string,
 

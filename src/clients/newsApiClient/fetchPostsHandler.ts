@@ -1,6 +1,8 @@
 import axios from "axios";
 import { NewsApiPosts_Request, NewsApiPosts_Response } from "./dto";
 import { FetchPostsHandler, Tag } from "@/types";
+import { convertCategoryLabelToDisplayName } from "./utils";
+import { MakeCategoriesArrayUnique } from "../utils";
 
 
 
@@ -51,20 +53,28 @@ const fetchPostsHandler: FetchPostsHandler = async (
   //   console.log("raw data", response.data);
   if (!response.data.articles || !Array.isArray(response.data.articles.results)) return [];
 
-  return response.data.articles.results.map((article) => ({
-    sourceClient: clientName,
-    id: article.uri,
-    title: article.title,
-    description: article.body?.slice(0, 200) || "",
-    content: article.body || "",
-    url: article.url,
-    imageUrl: article.image || "",
-    publishedAt: article.dateTime,
+  return response.data.articles.results.map((article) => {
+    const categories = article.categories?.flatMap(item => ({ displayName: convertCategoryLabelToDisplayName(item.label), clientsCompatibleValues: { [clientName]: [item.uri] } } as Tag)) || [];
 
-    source: article.source && ({ displayName: article.source?.title, clientsCompatibleValue: { [clientName]: article.source?.uri } } as Tag),
-    authors: article.authors?.flatMap(item => ({ displayName: item.name, clientsCompatibleValue: { [clientName]: item.uri } } as Tag)) || [],
-    categories: article.categories?.flatMap(item => ({ displayName: item.label, clientsCompatibleValue: { [clientName]: item.uri } } as Tag)) || [],
-  }));
+    const authors = article.authors?.flatMap(item => ({ displayName: item.name, clientsCompatibleValues: { [clientName]: [item.uri] } } as Tag)) || [];
+
+    const source = article.source && ({ displayName: article.source?.title, clientsCompatibleValues: { [clientName]: [article.source?.uri] } } as Tag);
+
+    return ({
+      sourceClient: clientName,
+      id: article.uri,
+      title: article.title,
+      description: article.body?.slice(0, 200) || "",
+      content: article.body || "",
+      url: article.url,
+      imageUrl: article.image || "",
+      publishedAt: article.dateTime,
+
+      categories: MakeCategoriesArrayUnique(categories),
+      authors: authors,
+      source: source,
+    })
+  });
 
 };
 export default fetchPostsHandler;

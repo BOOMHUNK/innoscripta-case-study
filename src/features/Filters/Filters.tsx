@@ -14,48 +14,11 @@ import { AutoSuggestTagInput, TextInput } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useSelectedClients } from "@/hooks";
-import { fetchAggregatedCategories } from "@/hooks/useAggregatedNews/fetchAggregatedCategories";
+import { fetchAggregatedCategories, fetchAggregatedSources } from "@/utils";
 
 
-
-function mockFetchTags(query: string): Promise<string[]> {
-  // A sample list of available tags
-  const allTags = [
-    "Society",
-    "dmoz/Sports/Cricket",
-    "Movies",
-    "Recreation",
-    "Useless Pages",
-    "Technology",
-    "Business",
-    "Sports",
-    "Entertainment",
-    "Science",
-    "Health",
-    "Politics",
-    "Travel",
-    "Education",
-    "Art",
-  ];
-
-  // Simulate network latency with a 500ms delay
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // Filter tags that include the query string (case-insensitive)
-      const filteredTags = allTags.filter((tag) =>
-        tag.toLowerCase().includes(query.toLowerCase())
-      );
-      resolve(filteredTags);
-    }, 500);
-  });
-}
 export default function Filters() {
   const clients = useSelectedClients();
-
-  const fetchCategorySuggestions = async (query: string) => {
-    const tags = await fetchAggregatedCategories(clients, query);
-    return tags;
-  };
 
   const selectedCategories = useSelector((state: RootState) => state.news.categories);
   const selectedSources = useSelector((state: RootState) => state.news.sources);
@@ -97,19 +60,19 @@ export default function Filters() {
             label="Categories:"
             placeholder="Type to search categories..."
             debounceTime={700}
-            fetchSuggestions={fetchCategorySuggestions}
+            fetchSuggestions={async (query) => await fetchAggregatedCategories(clients, query)}
             onChange={(tags) => dispatch(setCategories(tags))}
             value={selectedCategories}
           />
-          {/* <AutoSuggestTagInput
+          <AutoSuggestTagInput
             label="Sources:"
             placeholder="Type to search sources..."
             debounceTime={700}
-            fetchSuggestions={mockFetchTags}
+            fetchSuggestions={async (query) => await fetchAggregatedSources(clients, query)}
             onChange={(tags) => dispatch(setSources(tags))}
             value={selectedSources}
           />
-          <AutoSuggestTagInput
+          {/* <AutoSuggestTagInput
             label="Authors:"
             placeholder="Type to search authors..."
             debounceTime={700}

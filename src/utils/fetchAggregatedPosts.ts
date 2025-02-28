@@ -2,9 +2,9 @@ import { ClientFactory } from "@/clients";
 import { Article, Tag } from "@/types";
 
 /**
- * Fetches articles from multiple APIs using the provided clients and filters stored in redux states.
+ * Aggregates articles from multiple APIs using the provided clients and filters stored in redux states.
  */
-export const fetchAggregatedPosts = async (
+const fetchAggregatedPosts = async (
   clients: ClientFactory[], // List of API clients
   queryString?: string,
   pageSize = 10,
@@ -15,6 +15,7 @@ export const fetchAggregatedPosts = async (
   sources: Tag[] = [],
   authors: Tag[] = []
 ): Promise<Article[]> => {
+
   // Create fetch promises for each client
   const fetchPromises = clients.map((client) =>
     client.getPosts(
@@ -24,9 +25,9 @@ export const fetchAggregatedPosts = async (
       startDate,
       endDate,
       // Transform tags(categories, sources and authors) to clients-compatible values
-      categories.map(item => item.clientsCompatibleValue[client.name as keyof typeof item.clientsCompatibleValue]) || [],
-      sources.map(item => item.clientsCompatibleValue[client.name as keyof typeof item.clientsCompatibleValue]) || [],
-      authors.map(item => item.clientsCompatibleValue[client.name as keyof typeof item.clientsCompatibleValue]) || [],
+      categories.map(item => item.clientsCompatibleValues[client.name as keyof typeof item.clientsCompatibleValues]).flat() || [],
+      sources.map(item => item.clientsCompatibleValues[client.name as keyof typeof item.clientsCompatibleValues]).flat() || [],
+      authors.map(item => item.clientsCompatibleValues[client.name as keyof typeof item.clientsCompatibleValues]).flat() || [],
     )
   );
 
@@ -43,3 +44,4 @@ export const fetchAggregatedPosts = async (
 
   return allArticles;
 };
+export default fetchAggregatedPosts;

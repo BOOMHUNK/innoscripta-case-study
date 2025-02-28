@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { fetchAggregatedPosts } from "./fetchAggregatedPosts";
 import { ClientFactory } from "@/clients";
 import { RootState } from "@/store/store";
 import useSelectedClients from "../useSelectedClients";
+import { fetchAggregatedPosts } from "@/utils";
 
 const useAggregatedNews = () => {
   const newsFilters = useSelector((state: RootState) => state.news);

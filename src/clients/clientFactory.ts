@@ -74,7 +74,7 @@ export default class ClientFactory implements IClientFactory {
   ): Promise<Article[]> {
     try {
       return await this.fetchPostsHandler(
-        this.name as keyof Tag["clientsCompatibleValue"],
+        this.name as keyof Tag["clientsCompatibleValues"],
         this.baseUrl + this.postsEndpoint,
         this.apiToken,
         queryString,
@@ -103,7 +103,7 @@ export default class ClientFactory implements IClientFactory {
     }
     try {
       return await this.fetchCategoriesHandler(
-        this.name as keyof Tag["clientsCompatibleValue"],
+        this.name as keyof Tag["clientsCompatibleValues"],
         this.baseUrl + this.categoriesEndpoint,
         this.apiToken,
         prefix,
@@ -121,12 +121,47 @@ export default class ClientFactory implements IClientFactory {
 
 
   public async getSources(prefix: string): Promise<Tag[]> {
-    // ToDo: implement this
-    return Promise.resolve([]);
+    if (!this.fetchSourcesHandler || !this.sourcesEndpoint) {
+      return Promise.resolve([]);
+    }
+    try {
+      return await this.fetchSourcesHandler(
+        this.name as keyof Tag["clientsCompatibleValues"],
+        this.baseUrl + this.sourcesEndpoint,
+        this.apiToken,
+        prefix,
+      );
+    } catch (error) {
+      console.error(
+        `GetSources request failed: ${error instanceof Error ? error.message : String(error)
+        }`
+      );
+      throw new Error(
+        `Failed to fetch data from ${this.baseUrl + this.sourcesEndpoint}`
+      );
+    }
   }
+
   public async getAuthors(prefix: string): Promise<Tag[]> {
-    // ToDo: implement this
-    return Promise.resolve([]);
+    if (!this.fetchAuthorsHandler || !this.authorsEndpoint) {
+      return Promise.resolve([]);
+    }
+    try {
+      return await this.fetchAuthorsHandler(
+        this.name as keyof Tag["clientsCompatibleValues"],
+        this.baseUrl + this.authorsEndpoint,
+        this.apiToken,
+        prefix,
+      );
+    } catch (error) {
+      console.error(
+        `GetAuthors request failed: ${error instanceof Error ? error.message : String(error)
+        }`
+      );
+      throw new Error(
+        `Failed to fetch data from ${this.baseUrl + this.authorsEndpoint}`
+      );
+    }
   }
 }
 

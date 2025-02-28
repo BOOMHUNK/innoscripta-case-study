@@ -1,6 +1,7 @@
 import { FetchTagsHandler, Tag } from "@/types";
 import { NewsApiCategories_Request, NewsApiCategories_Response } from "./dto";
 import axios from "axios";
+import { convertCategoryLabelToDisplayName } from "./utils";
 
 
 const fetchCategoriesHandler: FetchTagsHandler = async (clientName, fullEndpointAddress, apiToken, prefix) => {
@@ -23,8 +24,8 @@ const fetchCategoriesHandler: FetchTagsHandler = async (clientName, fullEndpoint
 
 
     return response.data.map((rawCategory) => ({
-        displayName: rawCategory.label,
-        clientsCompatibleValue: { [clientName]: rawCategory.uri },
+        displayName: convertCategoryLabelToDisplayName(rawCategory.label),
+        clientsCompatibleValues: { [clientName]: [rawCategory.uri] },
     } as Tag));
 }
 

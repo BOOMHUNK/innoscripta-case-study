@@ -1,6 +1,7 @@
 import ClientFactory from "../clientFactory";
 import fetchCategoriesHandler from "./fetchCategoriesHandler";
 import fetchPostsHandler from "./fetchPostsHandler";
+import fetchSourcesHandler from "./fetchSourcesHandler";
 
 
 // Create an API client for Event Registry using the improved structure
@@ -11,9 +12,10 @@ const client = new ClientFactory(
   "/article/getArticles",
   fetchPostsHandler,
   "/suggestCategoriesFast",
-  fetchCategoriesHandler
-
-  //  ToDo: add other tags handlers
+  fetchCategoriesHandler,
+  "/suggestSourcesFast",
+  fetchSourcesHandler,
+  //  ToDo: add author tags handlers
 );
 
 export default client;

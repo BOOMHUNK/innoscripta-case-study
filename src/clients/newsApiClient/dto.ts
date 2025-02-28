@@ -80,8 +80,21 @@ export interface NewsApiCategories_Request {
   apiKey?: string;
 }
 
-export type NewsApiCategories_Response =  {
+export type NewsApiCategories_Response = {
   uri: string,
   label: string,
   parentUri: string
+}[]
+
+
+export interface NewsApiSources_Request {
+  prefix: string,
+  apiKey?: string;
+}
+
+export type NewsApiSources_Response = {
+  uri: string,
+  title: string,
+  dataType: string,
+  score: number
 }[]

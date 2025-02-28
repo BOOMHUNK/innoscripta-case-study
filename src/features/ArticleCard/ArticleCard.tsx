@@ -1,10 +1,10 @@
 import { Article } from "@/types";
-import timeAgo from "@/utils/timeAgo";
 import { forwardRef } from "react"
-import "./style.css";
 import { Tagchip } from "@/components";
 import { useDispatch } from "react-redux";
 import { setCategories } from "@/store/newsSlice";
+import { calculateTimeAgo } from "@/utils";
+import "./style.css";
 
 type ArticleCardProps = {
     article: Article;
@@ -22,9 +22,9 @@ const ArticleCard = forwardRef<HTMLAnchorElement, ArticleCardProps>(({ article }
                 <p className={`desc ${!article.description ? "skeleton" : ""}`}>{article.description || ""}</p>
                 <span className="source"> {article.source?.displayName}</span>
                 <div className="dateAndAuthor">
-                    <span className={`date ${!article.publishedAt ? "skeleton" : ""}`}> {article.publishedAt && timeAgo(article.publishedAt)}</span>
+                    <span className={`date ${!article.publishedAt ? "skeleton" : ""}`}> {article.publishedAt && calculateTimeAgo(article.publishedAt)}</span>
                     <span className={`author ${!article.authors ? "skeleton" : ""}`}>
-                        <img src="/images/author.png" width={20} height={20} /> {article.authors && article.authors.length > 0 ? article.authors.join(", ") : "Unknown"}
+                        <img src="/images/author.png" width={20} height={20} /> {article.authors && article.authors.length > 0 ? article.authors.reduce((acc, author) => acc ? `${acc}, ${author.displayName}` : author.displayName, '') : "Unknown"}
                     </span>
                 </div>
             </div>
@@ -33,7 +33,7 @@ const ArticleCard = forwardRef<HTMLAnchorElement, ArticleCardProps>(({ article }
                 article.categories && article.categories.length > 0 && <span className="category-container">
                     {
                         article.categories.map((category, index) => (
-                            index < 4 && category.displayName !== "dmoz" && (
+                            index < 4 && (
                                 <Tagchip key={category.displayName} value={category} onClick={() => dispatch(setCategories([category]))} />
                             )
                         ))
