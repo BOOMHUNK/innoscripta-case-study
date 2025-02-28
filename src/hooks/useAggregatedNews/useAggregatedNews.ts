@@ -1,19 +1,19 @@
 import { useSelector } from "react-redux";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { fetchAggregatedNews } from "./fetchAggregatedNews";
+import { fetchAggregatedPosts } from "./fetchAggregatedPosts";
 import { ClientFactory } from "@/clients";
 import { RootState } from "@/store/store";
 import useSelectedClients from "../useSelectedClients";
 
 const useAggregatedNews = () => {
   const newsFilters = useSelector((state: RootState) => state.news);
-  const clientsArray: ClientFactory<any>[] = useSelectedClients();
+  const clientsArray: ClientFactory[] = useSelectedClients();
 
   // use react query with its pagination features
   return useInfiniteQuery({
     queryKey: ["aggregatedArticles", newsFilters],
     queryFn: async ({ pageParam = 1 }) => {
-      return await fetchAggregatedNews(
+      return await fetchAggregatedPosts(
         clientsArray,
         newsFilters.queryString,
         newsFilters.pageSize,

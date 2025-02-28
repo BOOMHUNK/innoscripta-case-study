@@ -1,0 +1,45 @@
+import { ClientFactory } from "@/clients";
+import { Article, Tag } from "@/types";
+
+/**
+ * Fetches articles from multiple APIs using the provided clients and filters stored in redux states.
+ */
+export const fetchAggregatedPosts = async (
+  clients: ClientFactory[], // List of API clients
+  queryString?: string,
+  pageSize = 10,
+  pageNum = 1,
+  startDate?: string,
+  endDate?: string,
+  categories: Tag[] = [],
+  sources: Tag[] = [],
+  authors: Tag[] = []
+): Promise<Article[]> => {
+  // Create fetch promises for each client
+  const fetchPromises = clients.map((client) =>
+    client.getPosts(
+      queryString,
+      pageSize,
+      pageNum,
+      startDate,
+      endDate,
+      // Transform tags(categories, sources and authors) to clients-compatible values
+      categories.map(item => item.clientsCompatibleValue[client.name as keyof typeof item.clientsCompatibleValue]) || [],
+      sources.map(item => item.clientsCompatibleValue[client.name as keyof typeof item.clientsCompatibleValue]) || [],
+      authors.map(item => item.clientsCompatibleValue[client.name as keyof typeof item.clientsCompatibleValue]) || [],
+    )
+  );
+
+  // Wait for all clients to return results
+  const results = await Promise.all(fetchPromises);
+
+  // Flatten the array and sort by date
+  const allArticles = results
+    .flat()
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
+
+  return allArticles;
+};

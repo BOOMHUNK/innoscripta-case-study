@@ -1,14 +1,14 @@
 // store/newsSlice.ts
 import { AvailableClients } from "@/clients";
+import { Tag } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-
 interface NewsFiltersState {
-  clients: string[]; // Store only client names for serializability
+  clients: string[]; // Store usable clients' names for serializability
   queryString: string;
-  categories: string[];
-  sources: string[];
-  authors: string[];
+  categories: Tag[];
+  sources: Tag[];
+  authors: Tag[];
   startDate: string;
   endDate: string;
   pageSize: number;
@@ -24,13 +24,14 @@ const initialState: NewsFiltersState = {
   endDate: "",
   pageSize: 10,
 };
+
 const newsSlice = createSlice({
   name: "news",
   initialState,
   reducers: {
     addClient: (state, action: PayloadAction<string>) => {
       if (!state.clients.includes(action.payload)) {
-        state.clients.push(action.payload); // ✅ Store as array, ensuring uniqueness
+        state.clients.push(action.payload); //  Store as array, yet ensuring uniqueness
       }
     },
     removeClient: (state, action: PayloadAction<string>) => {
@@ -39,13 +40,13 @@ const newsSlice = createSlice({
     setQueryString: (state, action: PayloadAction<string>) => {
       state.queryString = action.payload;
     },
-    setCategories: (state, action: PayloadAction<string[]>) => {
+    setCategories: (state, action: PayloadAction<Tag[]>) => {
       state.categories = action.payload;
     },
-    setSources: (state, action: PayloadAction<string[]>) => {
+    setSources: (state, action: PayloadAction<Tag[]>) => {
       state.sources = action.payload;
     },
-    setAuthors: (state, action: PayloadAction<string[]>) => {
+    setAuthors: (state, action: PayloadAction<Tag[]>) => {
       state.authors = action.payload;
     },
     setStartDate: (state, action: PayloadAction<string>) => {

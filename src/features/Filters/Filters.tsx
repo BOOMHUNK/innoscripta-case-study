@@ -13,6 +13,8 @@ import { FiSearch } from "react-icons/fi";
 import { AutoSuggestTagInput, TextInput } from "@/components";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { useSelectedClients } from "@/hooks";
+import { fetchAggregatedCategories } from "@/hooks/useAggregatedNews/fetchAggregatedCategories";
 
 
 
@@ -48,6 +50,13 @@ function mockFetchTags(query: string): Promise<string[]> {
   });
 }
 export default function Filters() {
+  const clients = useSelectedClients();
+
+  const fetchCategorySuggestions = async (query: string) => {
+    const tags = await fetchAggregatedCategories(clients, query);
+    return tags;
+  };
+
   const selectedCategories = useSelector((state: RootState) => state.news.categories);
   const selectedSources = useSelector((state: RootState) => state.news.sources);
   const selectedAuthors = useSelector((state: RootState) => state.news.authors);
@@ -88,11 +97,11 @@ export default function Filters() {
             label="Categories:"
             placeholder="Type to search categories..."
             debounceTime={700}
-            fetchSuggestions={mockFetchTags}
+            fetchSuggestions={fetchCategorySuggestions}
             onChange={(tags) => dispatch(setCategories(tags))}
             value={selectedCategories}
           />
-          <AutoSuggestTagInput
+          {/* <AutoSuggestTagInput
             label="Sources:"
             placeholder="Type to search sources..."
             debounceTime={700}
@@ -107,7 +116,7 @@ export default function Filters() {
             fetchSuggestions={mockFetchTags}
             onChange={(tags) => dispatch(setAuthors(tags))}
             value={selectedAuthors}
-          />
+          /> */}
         </div>
 
 

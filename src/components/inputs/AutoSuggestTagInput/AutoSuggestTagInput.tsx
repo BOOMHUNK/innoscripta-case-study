@@ -4,16 +4,17 @@ import Tagchip from "@/components/Tagchip";
 import "@/components/inputs/style.css";
 import "./style.css";
 import { CgSpinnerAlt } from "react-icons/cg";
+import { Tag } from "@/types";
 
 export interface AutoSuggestTagInputProps {
   label?: string;
   placeholder?: string;
   /** Async function that returns suggestions given a query */
-  fetchSuggestions: (query: string) => Promise<string[]>;
+  fetchSuggestions: (query: string) => Promise<Tag[]>;
   /** Controlled selected tags value */
-  value: string[];
+  value: Tag[];
   /** Callback fired when the selected tags change */
-  onChange: (tags: string[]) => void;
+  onChange: (tags: Tag[]) => void;
   /** Debounce delay in milliseconds */
   debounceTime?: number;
 }
@@ -37,7 +38,7 @@ export default function AutoSuggestTagInput({
 
   // State for the current input text and suggestions.
   const [inputValue, setInputValue] = useState("");
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<Tag[]>([]);
   const [fetchingState, setFetchingState] = useState<"fetching" | "idle" | "error">("idle");
 
   // Debounce and defer the current input.
@@ -62,8 +63,8 @@ export default function AutoSuggestTagInput({
   }, [deferredInput, fetchSuggestions]);
 
   // Adds a tag if not already present and calls onChange.
-  const addTag = (tag: string) => {
-    if (tag && !value.includes(tag)) {
+  const addTag = (tag: Tag) => {
+    if (tag && !value.some(t => t.displayName === tag.displayName)) {
       onChange([...value, tag]);
     }
     setInputValue("");
@@ -72,7 +73,7 @@ export default function AutoSuggestTagInput({
   };
 
   // Remove a tag and call onChange.
-  const removeTag = (tag: string) => {
+  const removeTag = (tag: Tag) => {
     onChange(value.filter((t) => t !== tag));
   };
 
@@ -80,13 +81,7 @@ export default function AutoSuggestTagInput({
     setInputValue(e.target.value);
   };
 
-  // When Enter is pressed, add the current input as a tag.
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && inputValue.trim() !== "") {
-      e.preventDefault();
-      addTag(inputValue.trim());
-    }
-  };
+
 
   return (
     <div className="autosuggest input-container" ref={ref}>
@@ -97,13 +92,15 @@ export default function AutoSuggestTagInput({
             type="text"
             value={inputValue}
             onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
             placeholder={placeholder}
           />
           {value.length > 0 && (
             <div className="selected-tags">
               {value.map((tag) => (
-                <Tagchip key={tag} onClick={() => removeTag(tag)} value={`${tag} ×`} />
+                <Tagchip key={tag.displayName}
+                  onClick={() => removeTag(tag)}
+                  value={tag}
+                  overrideDisplayName={`${tag.displayName} ×`} />
               ))}
             </div>
           )}
@@ -114,7 +111,7 @@ export default function AutoSuggestTagInput({
               className={`spinner ${suggestions.length > 0 && fetchingState !== "fetching" ? "hidden" : ""}`}
             />
             {suggestions.map((suggestion) => (
-              <Tagchip key={suggestion} onClick={() => addTag(suggestion)} value={suggestion} />
+              <Tagchip key={suggestion.displayName} onClick={() => addTag(suggestion)} value={suggestion} />
             ))}
           </div>
         )}

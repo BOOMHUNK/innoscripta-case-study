@@ -1,3 +1,4 @@
+import { Article } from "@/types";
 import timeAgo from "@/utils/timeAgo";
 import { forwardRef } from "react"
 import "./style.css";
@@ -19,7 +20,7 @@ const ArticleCard = forwardRef<HTMLAnchorElement, ArticleCardProps>(({ article }
             <div className="content">
                 <h2 className={`title ${!article.title ? "skeleton" : ""}`}>{article.title || ""}</h2>
                 <p className={`desc ${!article.description ? "skeleton" : ""}`}>{article.description || ""}</p>
-                <span className="source"> {article.source}</span>
+                <span className="source"> {article.source?.displayName}</span>
                 <div className="dateAndAuthor">
                     <span className={`date ${!article.publishedAt ? "skeleton" : ""}`}> {article.publishedAt && timeAgo(article.publishedAt)}</span>
                     <span className={`author ${!article.authors ? "skeleton" : ""}`}>
@@ -29,11 +30,11 @@ const ArticleCard = forwardRef<HTMLAnchorElement, ArticleCardProps>(({ article }
             </div>
             <span className="separator"></span>
             {
-                article.category && article.category.length > 0 && <span className="category-container">
+                article.categories && article.categories.length > 0 && <span className="category-container">
                     {
-                        article.category.map((category, index) => (
-                            index < 4 && category !== "dmoz" && (
-                                <Tagchip key={category} value={category} onClick={() => dispatch(setCategories([category]))} />
+                        article.categories.map((category, index) => (
+                            index < 4 && category.displayName !== "dmoz" && (
+                                <Tagchip key={category.displayName} value={category} onClick={() => dispatch(setCategories([category]))} />
                             )
                         ))
                     }

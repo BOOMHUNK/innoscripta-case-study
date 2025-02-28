@@ -1,4 +1,4 @@
-export interface NewsApiRequest {
+export interface NewsApiPosts_Request {
   action: "getArticles";
   keyword?: string | string[];
   keywordOper?: "and" | "or";
@@ -12,13 +12,13 @@ export interface NewsApiRequest {
   articlesPage?: number;
   articlesCount?: number;
   articlesSortBy?:
-    | "date"
-    | "rel"
-    | "sourceImportance"
-    | "sourceAlexaGlobalRank"
-    | "sourceAlexaCountryRank"
-    | "socialScore"
-    | "facebookShares";
+  | "date"
+  | "rel"
+  | "sourceImportance"
+  | "sourceAlexaGlobalRank"
+  | "sourceAlexaCountryRank"
+  | "socialScore"
+  | "facebookShares";
   articlesSortByAsc?: boolean;
   articleBodyLen?: number;
   resultType?: "articles";
@@ -32,7 +32,7 @@ export interface NewsApiRequest {
   apiKey?: string;
 }
 
-export interface NewsApiResponse {
+export interface NewsApiPosts_Response {
   articles: {
     results: {
       uri: string;
@@ -46,7 +46,11 @@ export interface NewsApiResponse {
         title: string;
         [key: string]: any;
       };
-      authors?: { name: string; [key: string]: any }[];
+      authors?: {
+        uri: string;
+        name: string;
+        [key: string]: any
+      }[];
       concepts?: {
         uri: string;
         label: { eng: string };
@@ -67,3 +71,17 @@ export interface NewsApiResponse {
     pages: number;
   };
 }
+
+export interface NewsApiCategories_Request {
+  prefix: string,
+  page: number,
+  count: number,
+  articleBodyLen: number,
+  apiKey?: string;
+}
+
+export type NewsApiCategories_Response =  {
+  uri: string,
+  label: string,
+  parentUri: string
+}[]
