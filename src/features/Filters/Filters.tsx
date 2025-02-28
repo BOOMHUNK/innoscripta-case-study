@@ -1,4 +1,4 @@
-import { useState, useDeferredValue, useEffect } from "react";
+// Filters.tsx
 import { useDispatch } from "react-redux";
 import {
   setQueryString,
@@ -9,97 +9,44 @@ import {
   setEndDate,
 } from "@/store/newsSlice";
 import "./style.css";
-import { useDebounce } from "@/hooks";
 import { FiSearch } from "react-icons/fi";
-import { TextInput } from "@/components";
+import TextInput from "@/components/TextInput";
 
-type FiltersProps = {};
-
-export default function Filters({ }: FiltersProps) {
+export default function Filters() {
   const dispatch = useDispatch();
-
-  // Local state for inputs
-  const [query, setQueryInput] = useState("");
-  // const [categories, setCategoriesInput] = useState("");
-  // const [sources, setSourcesInput] = useState("");
-  // const [authors, setAuthorsInput] = useState("");
-  const [startDate, setStartDateInput] = useState("");
-  const [endDate, setEndDateInput] = useState("");
-
-  // Apply debouncing to prevent frequent updates
-  const debouncedQuery = useDebounce(query, 700);
-  // const debouncedCategories = useDebounce(categories, 700);
-  // const debouncedSources = useDebounce(sources, 700);
-  // const debouncedAuthors = useDebounce(authors, 700);
-  const debouncedStartDate = useDebounce(startDate, 700);
-  const debouncedEndDate = useDebounce(endDate, 700);
-
-  // Defer rendering for smoother UI
-  const deferredQuery = useDeferredValue(debouncedQuery);
-  // const deferredCategories = useDeferredValue(debouncedCategories);
-  // const deferredSources = useDeferredValue(debouncedSources);
-  // const deferredAuthors = useDeferredValue(debouncedAuthors);
-
-  // Dispatch actions only when debounced & deferred values change
-  useEffect(() => {
-    console.log(deferredQuery);
-
-    dispatch(setQueryString(deferredQuery));
-  }, [deferredQuery, dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(setCategories(deferredCategories.split(",")));
-  // }, [deferredCategories, dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(setSources(deferredSources.split(",")));
-  // }, [deferredSources, dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(setAuthors(deferredAuthors.split(",")));
-  // }, [deferredAuthors, dispatch]);
-
-  useEffect(() => {
-    dispatch(setStartDate(debouncedStartDate));
-  }, [debouncedStartDate, dispatch]);
-
-  useEffect(() => {
-    dispatch(setEndDate(debouncedEndDate));
-  }, [debouncedEndDate, dispatch]);
 
   return (
     <div className="filters">
-      {/* Filter Inputs */}
       <div className="inputs-container">
         <TextInput
           iconElement={<FiSearch />}
           autoComplete="off"
           type="text"
           placeholder="Search by keyword"
-          value={query}
-          onChange={(e) => setQueryInput(e.target.value)}
+          debounceTime={700}
+          onChange={(v) => dispatch(setQueryString(v))}
         />
 
-        {/* <input
-          type="text"
+        {/* <TextInput
           autoComplete="off"
+          type="text"
           placeholder="Filter by categories"
-          value={categories}
-          onChange={(e) => setCategoriesInput(e.target.value)}
+          debounceTime={700}
+          onChange={(v) => dispatch(setCategories(v.split(",")))}
         />
-        <input
-          type="text"
+        <TextInput
           autoComplete="off"
+          type="text"
           placeholder="Filter by sources"
-          value={sources}
-          onChange={(e) => setSourcesInput(e.target.value)}
+          debounceTime={700}
+          onChange={(v) => dispatch(setSources(v.split(",")))}
         />
-        <input
-          type="text"
+        <TextInput
           autoComplete="off"
+          type="text"
           placeholder="Filter by authors"
-          value={authors}
-          onChange={(e) => setAuthorsInput(e.target.value)}
+          debounceTime={700}
+          onChange={(v) => dispatch(setAuthors(v.split(",")))}
         /> */}
 
         <div className="date-filters">
@@ -107,25 +54,18 @@ export default function Filters({ }: FiltersProps) {
             label="From:"
             type="date"
             placeholder="Start Date"
-            value={startDate}
-            onChange={(e) => {
-              setStartDateInput(e.target.value);
-            }}
+            debounceTime={700}
+            onChange={(v) => dispatch(setStartDate(v))}
           />
-
-
           <TextInput
             label="To:"
             type="date"
             placeholder="End Date"
-            value={endDate}
-            onChange={(e) => {
-              setEndDateInput(e.target.value);
-            }}
+            debounceTime={700}
+            onChange={(v) => dispatch(setEndDate(v))}
           />
-
         </div>
       </div>
-    </div >
+    </div>
   );
 }
