@@ -98,3 +98,16 @@ export type NewsApiSources_Response = {
   dataType: string,
   score: number
 }[]
+
+
+export interface NewsApiAuthors_Request {
+  prefix: string,
+  apiKey?: string;
+}
+
+export type NewsApiAuthors_Response = {
+  uri: string,
+  name: string,
+  type: string,
+  isAgency: boolean
+}[]

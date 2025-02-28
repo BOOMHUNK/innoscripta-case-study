@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useSelectedClients } from "@/hooks";
 import { fetchAggregatedCategories, fetchAggregatedSources } from "@/utils";
+import fetchAggregatedAuthors from "@/utils/fetchAggregatedAuthors";
 
 
 export default function Filters() {
@@ -72,14 +73,14 @@ export default function Filters() {
             onChange={(tags) => dispatch(setSources(tags))}
             value={selectedSources}
           />
-          {/* <AutoSuggestTagInput
+          <AutoSuggestTagInput
             label="Authors:"
             placeholder="Type to search authors..."
             debounceTime={700}
-            fetchSuggestions={mockFetchTags}
+            fetchSuggestions={async (query) => await fetchAggregatedAuthors(clients, query)}
             onChange={(tags) => dispatch(setAuthors(tags))}
             value={selectedAuthors}
-          /> */}
+          />
         </div>
 
 

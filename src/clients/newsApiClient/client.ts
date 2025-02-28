@@ -1,4 +1,5 @@
 import ClientFactory from "../clientFactory";
+import fetchAuthorsHandler from "./fetchAuthorsHandler";
 import fetchCategoriesHandler from "./fetchCategoriesHandler";
 import fetchPostsHandler from "./fetchPostsHandler";
 import fetchSourcesHandler from "./fetchSourcesHandler";
@@ -15,7 +16,8 @@ const client = new ClientFactory(
   fetchCategoriesHandler,
   "/suggestSourcesFast",
   fetchSourcesHandler,
-  //  ToDo: add author tags handlers
+  "/suggestAuthorsFast",
+  fetchAuthorsHandler
 );
 
 export default client;
