@@ -6,7 +6,13 @@
   align-items: start;
   justify-content: flex-start;
   z-index: 20;
+  @media (max-width: 768px) {
+    margin-top: 150px;
 
+    & * {
+      font-size: 14px !important;
+    }
+  }
   & .inputs-container {
     padding: 0 32px;
     width: 100%;
@@ -14,9 +20,12 @@
     max-width: 600px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 32px;
+    @media (max-width: 768px) {
+      padding: 0 16px;
+    }
+
     & .date-filters {
-      margin-top: 16px;
       width: 100%;
       display: flex;
       justify-content: flex-end;
@@ -26,13 +35,15 @@
         flex-direction: column;
         gap: 16px;
       }
-      & input {
-        max-width: 200px;
-        @media (max-width: 768px) {
-          max-width: unset;
-        }
-      }
+    }
+    & .more-filters {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 32px;
+      flex-direction: column;
+      gap: 32px;
     }
   }
 }
-

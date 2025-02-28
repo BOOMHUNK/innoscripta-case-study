@@ -2,8 +2,9 @@
   position: relative;
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   gap: 8px;
   & input {
     width: 100%;
@@ -38,11 +39,12 @@
     transform: translateY(-45%);
   }
   & .label {
+    transform: translateX(8px);
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     cursor: default;
     &::selection {
       background: none;
     }
-    min-width: 60px;
+    min-width: 80px;
   }
 }

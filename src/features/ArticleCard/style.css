@@ -38,21 +38,6 @@
     align-items: flex-start;
     gap: 4px;
     flex-wrap: wrap;
-
-    & .category {
-      cursor: pointer;
-      border: none;
-      border-radius: 8px;
-      padding: 4px 8px;
-      background: #00000020;
-      color: #000;
-      font-size: 14px;
-      font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-        sans-serif;
-      &:hover {
-        background: #6b6b6b20;
-      }
-    }
   }
 
   .image {

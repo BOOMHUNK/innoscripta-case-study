@@ -1,7 +1,7 @@
 // TextInput.tsx
 import { useDebounce } from "@/hooks";
 import { useState, useEffect, useDeferredValue, ChangeEvent, InputHTMLAttributes } from "react";
-import "./style.css";
+import "@/components/inputs/style.css";
 
 export type TextInputProps = {
   label?: string;

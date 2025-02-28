@@ -1,0 +1,6 @@
+https://newsapi.ai/documentation?tab=suggAuthors   key 1: "a85611ba-364f-4d29-8181-83923f6721f0"   key 2: "2c3f16a1-5196-40b9-ab3b-4036223e1938"
+https://newsapi.org/docs/endpoints/top-headlines
+https://open-platform.theguardian.com/documentation/search
+
+
+https://developer.nytimes.com/apis     or     https://developer.nytimes.com/docs/most-popular-product/1/types/MediaMetadata

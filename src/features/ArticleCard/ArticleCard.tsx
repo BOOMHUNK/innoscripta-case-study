@@ -1,12 +1,17 @@
 import timeAgo from "@/utils/timeAgo";
 import { forwardRef } from "react"
 import "./style.css";
+import { Tagchip } from "@/components";
+import { useDispatch } from "react-redux";
+import { setCategories } from "@/store/newsSlice";
 
 type ArticleCardProps = {
     article: Article;
 }
 
 const ArticleCard = forwardRef<HTMLAnchorElement, ArticleCardProps>(({ article }, ref) => {
+    const dispatch = useDispatch();
+
     return (
         <a className="news-article" href={article.url} target="_blank" rel="noopener noreferrer" ref={ref}>
             <img onError={(e) => e.currentTarget.src = "/images/fallback-img.jpg"} src={article.imageUrl || ""} alt={article.title} className={`image ${!article.imageUrl ? "skeleton" : ""}`} />
@@ -28,12 +33,7 @@ const ArticleCard = forwardRef<HTMLAnchorElement, ArticleCardProps>(({ article }
                     {
                         article.category.map((category, index) => (
                             index < 4 && category !== "dmoz" && (
-                                <button key={category} onClick={(e) => {
-                                    e.stopPropagation();
-                                    e.preventDefault();
-                                }}
-                                    className="category">{category}
-                                </button>
+                                <Tagchip key={category} value={category} onClick={() => dispatch(setCategories([category]))} />
                             )
                         ))
                     }

@@ -13,7 +13,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
     {children}
 
     <div className="footnotes">
-      <q>This is a case study assignment for joining innoscripta done by Shayan Valiyari</q>
+      <span>This is a case study assignment for joining innoscripta done by <br />Shayan Valiyari</span>
     </div>
   </div>;
 }

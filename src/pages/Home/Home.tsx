@@ -9,7 +9,7 @@ export default function Home() {
         <div className="home">
 
             <Filters />
-            {/* <NewsFeed /> */}
+            <NewsFeed />
 
         </div>
     );

@@ -1,0 +1,75 @@
+.autosuggest.input-container {
+
+  & .autosuggest-tag-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    width: 100%;
+    & .tag-input-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+
+      & .selected-tags {
+        border: solid 1.5px #fff;
+        border-radius: 16px;
+        padding: 16px;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: flex-start;
+        gap: 4px;
+      }
+    }
+    & .suggestions-dropdown {
+      position: absolute;
+      top: 90px;
+      width: 100%;
+      z-index: 10;
+      min-height: 200px;
+      background-color: #ecececbc;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 50px #0000006a;
+      border-radius: 16px;
+      padding: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      align-content: flex-start;
+      gap: 4px;
+      & .spinner {
+        z-index: 10;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-45%);
+        font-size: 64px;
+        animation: spin 1s linear infinite;
+        transform: all 0.3s ease-in-out;
+        opacity: 0.3;
+        &.hidden {
+          opacity: 0;
+        }
+      }
+      & .tagchip{
+        z-index: 20;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: translateX(-50%) translateY(-37%) rotate(0deg);
+  }
+  to {
+    transform: translateX(-50%) translateY(-37%) rotate(360deg);
+  }
+}

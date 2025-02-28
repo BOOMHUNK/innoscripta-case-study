@@ -1,3 +1,4 @@
-import TextInput from "./TextInput";
+import Tagchip from "./Tagchip";
 
-export { TextInput };
+export * from "./inputs";
+export { Tagchip };
