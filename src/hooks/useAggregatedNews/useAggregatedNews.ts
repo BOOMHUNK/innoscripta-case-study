@@ -29,6 +29,7 @@ const useAggregatedNews = () => {
     getNextPageParam: (lastPage, allPages) => {
       return lastPage?.length > 0 ? allPages.length + 1 : undefined;
     },
+    refetchOnWindowFocus: false, // disable refetching on window/tab focus
   });
 };
 export default useAggregatedNews;
