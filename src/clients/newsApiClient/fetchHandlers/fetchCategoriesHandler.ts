@@ -1,7 +1,7 @@
 import { FetchTagsHandler, Tag } from "@/types";
-import { NewsApiCategories_Request, NewsApiCategories_Response } from "./dto";
+import { NewsApiCategories_Request, NewsApiCategories_Response } from "../dto";
 import axios from "axios";
-import { convertCategoryLabelToDisplayName } from "./utils";
+import { convertCategoryLabelToDisplayName } from "../utils";
 
 
 const fetchCategoriesHandler: FetchTagsHandler = async (clientName, fullEndpointAddress, apiToken, prefix) => {

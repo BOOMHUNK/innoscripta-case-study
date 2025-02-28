@@ -1,3 +1,4 @@
+export * from "./configs";
 import calculateTimeAgo from "./calculateTimeAgo";
 import fetchAggregatedPosts from "./fetchAggregatedPosts";
 import fetchAggregatedCategories from "./fetchAggregatedCategories";

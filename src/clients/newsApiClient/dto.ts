@@ -1,3 +1,5 @@
+// extracted types based on the api docs at https://newsapi.ai/documentation
+
 export interface NewsApiPosts_Request {
   action: "getArticles";
   keyword?: string | string[];

@@ -1,8 +1,8 @@
 import axios from "axios";
-import { NewsApiPosts_Request, NewsApiPosts_Response } from "./dto";
+import { NewsApiPosts_Request, NewsApiPosts_Response } from "../dto";
 import { FetchPostsHandler, Tag } from "@/types";
-import { convertCategoryLabelToDisplayName } from "./utils";
-import { MakeCategoriesArrayUnique } from "../utils";
+import { convertCategoryLabelToDisplayName } from "../utils";
+import { MakeCategoriesArrayUnique } from "../../utils";
 
 
 
