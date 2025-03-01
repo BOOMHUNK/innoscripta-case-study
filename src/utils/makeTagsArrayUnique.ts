@@ -4,34 +4,35 @@ const MakeTagsArrayUnique = (tags: Tag[]) => {
     // Create a map to merge tags by displayName.
     // This will ensure that we don't have duplicate tags with the same displayName.
     // Also it will merge all the clientsCompatibleValues arrays for each client.
-    const mergedTagsMap: { [displayName: string]: Tag } = {};
+    const mergedTagsMap: { [key: string]: Tag } = {};
 
     tags.forEach((tag) => {
-        if (!mergedTagsMap[tag.displayName.toLowerCase()]) {
-            // If this is the first occurrence, add it to the map.
-            mergedTagsMap[tag.displayName] = {
+        const key = tag.displayName.toLowerCase(); // force use lower-case for the key
+        if (!mergedTagsMap[key]) {
+            // If first occurrence, store it
+            mergedTagsMap[key] = {
                 displayName: tag.displayName,
                 clientsCompatibleValues: { ...tag.clientsCompatibleValues },
             };
         } else {
-            // Otherwise, merge the clientsCompatibleValue fields.
-            const existing = mergedTagsMap[tag.displayName];
+            // Merge clientsCompatibleValues if the tag already exists.
+            const existing = mergedTagsMap[key];
             for (const clientName in tag.clientsCompatibleValues) {
-
                 if (!Array.isArray(existing.clientsCompatibleValues[clientName])) {
                     existing.clientsCompatibleValues[clientName] = [];
                 }
-
                 existing.clientsCompatibleValues[clientName] = Array.from(
                     new Set([
                         ...existing.clientsCompatibleValues[clientName],
                         ...(tag.clientsCompatibleValues[clientName] || []),
-                    ]));
+                    ])
+                );
             }
         }
     });
 
     // Convert the map to an array.
     return Object.values(mergedTagsMap);
-}
+};
+
 export default MakeTagsArrayUnique;

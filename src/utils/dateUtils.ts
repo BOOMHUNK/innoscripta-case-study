@@ -1,4 +1,4 @@
-export default function calculateTimeAgo(dateString: string): string {
+export function calculateTimeAgo(dateString: string): string {
     const date = new Date(dateString);
     const now = new Date();
     const diff = (now.getTime() - date.getTime()) / 1000; // Difference in seconds
@@ -11,3 +11,10 @@ export default function calculateTimeAgo(dateString: string): string {
     if (diff < 31536000) return `${Math.floor(diff / 2592000)} months ago`;
     return `${Math.floor(diff / 31536000)} years ago`;
 }
+
+// Helper: subtract one day from a YYYY-MM-DD date string.
+export const subtractOneDay = (dateStr: string): string => {
+    const date = new Date(dateStr);
+    date.setDate(date.getDate() - 1);
+    return date.toISOString().slice(0, 10); // "YYYY-MM-DD"
+};

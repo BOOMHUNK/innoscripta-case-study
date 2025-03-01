@@ -20,6 +20,7 @@ const fetchAggregatedSources = async (
     // Flatten the results to a single array.
     const flatTags: Tag[] = results.flat();
 
+
     // Remove duplicates from the array.
     return MakeTagsArrayUnique(flatTags);
 };

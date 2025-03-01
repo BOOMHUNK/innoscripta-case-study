@@ -10,6 +10,6 @@ export const AvailableClients: { [key: string]: ClientFactory } = {
 
 
 
-export const EachApiPageSize = 16;
+export const EachApiPageSize = 10;
 
 

@@ -27,7 +27,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
   const body: NewsApiPosts_Request = {
 
     action: "getArticles",
-    articlesSortBy: "date",
+    articlesSortBy: "socialScore",
     articlesSortByAsc: false,
     resultType: "articles",
     forceMaxDataTimeWindow: 31,

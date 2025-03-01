@@ -3,9 +3,6 @@ import { FetchPostsHandler, Tag } from "@/types";
 import { EachApiPageSize } from "@/configs";
 import { GuardianPosts_Request, GuardianPosts_Response } from "./dto";
 
-
-
-
 const fetchPostsHandler: FetchPostsHandler = async (
   clientName,
   baseUrl,
