@@ -1,4 +1,4 @@
-import { calculateTimeAgo, subtractOneDay } from "./dateutils";
+import { calculateTimeAgo, subtractOneDay } from "./dateUtils";
 import MakeTagsArrayUnique from "./makeTagsArrayUnique";
 import fetchAggregatedPosts from "./fetchAggregatedPosts";
 import fetchAggregatedCategories from "./fetchAggregatedCategories";

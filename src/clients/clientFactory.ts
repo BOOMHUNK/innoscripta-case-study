@@ -1,5 +1,10 @@
 import { Article, FetchPostsHandler, FetchTagsHandler, IClientFactory, Tag } from "@/types";
 
+/**
+ * Implements the `IClientFactory` interface to create client instances for interacting with a news API.
+ * The `ClientFactory` class provides a standardized way to configure and instantiate API clients with common functionalities 
+ * such as data fetching, filtering, and transforming into our app's readable type and format.
+ */
 export default class ClientFactory implements IClientFactory {
 
   public name: string;
