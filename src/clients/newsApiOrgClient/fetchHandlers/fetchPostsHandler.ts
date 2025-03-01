@@ -21,7 +21,12 @@ const fetchPostsHandler: FetchPostsHandler = async (
   filterSources = [],
   filterAuthors = [],
 ) => {
-  if (filterAuthors.length > 0) return []; // this api doesn't support filtering by author
+  const Categories = filterCategories.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  const Sources = filterSources.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  const Authors = filterAuthors.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+
+
+  if (Authors.length > 0) return []; // this api doesn't support filtering by author
   let response: AxiosResponse<NewsApiOrgPosts_Response, any>;
   const headers = {
     Accept: "application/json",
@@ -29,9 +34,9 @@ const fetchPostsHandler: FetchPostsHandler = async (
   };
 
   // if sources or q was available use default endpoint
-  // if there was no date filter provided use /top-headlines endpoint else return []
-  if ((filterSources.length > 0 || queryString?.trim()) && filterCategories?.length == 0) {
-    if ((queryString?.trim() || "") == "") return [];
+  // if there was no date filter provided use /top-headlines endpoint else return []  
+  if ((Sources.length > 0 || queryString?.trim()) && Categories?.length == 0) {
+    // if ((queryString?.trim() || "") == "") return [];
     // build request data
     const reqData: NewsApiOrgPosts_Request = {
       ...((queryString?.trim() || "") && { q: queryString }),
@@ -42,7 +47,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
       language: "en",
       ...(filterDateStart && { from: filterDateStart }),
       ...(filterDateEnd && { to: filterDateEnd }),
-      ...(filterSources.length > 0 && { sources: filterSources.join(",") }),
+      ...(Sources.length > 0 && { sources: Sources.join(",") }),
     }
     const params = new URLSearchParams({
       ...reqData,
@@ -60,7 +65,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
       return []; // This endpoint doesn't support filtering by date
     } else {
 
-      if (filterSources.length > 0 && filterSources.length > 0) return [];  // can't use both categories and sources in this api
+      if (Sources.length > 0 && Sources.length > 0) return [];  // can't use both categories and sources in this api
       // use headlines endpoint
       // build headlines request data
       const reqData: NewsApiOrgHeadlines_Request = {
@@ -70,8 +75,8 @@ const fetchPostsHandler: FetchPostsHandler = async (
         language: "en",
         sortBy: "popularity",
         searchIn: "title",
-        ...(filterCategories?.length > 0 && { category: filterCategories[0] as keyof NewsApiOrgHeadlines_Request["category"] }), // can't filter based on multiple categories in this api
-        ...(filterSources.length > 0 && { sources: filterSources.join(",") }),
+        ...(Categories?.length > 0 && { category: Categories[0] as keyof NewsApiOrgHeadlines_Request["category"] }), // can't filter based on multiple categories in this api
+        ...(Sources.length > 0 && { sources: Sources.join(",") }),
       }
       const params = new URLSearchParams({
         ...reqData,

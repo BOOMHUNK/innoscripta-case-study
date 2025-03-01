@@ -18,9 +18,13 @@ const fetchPostsHandler: FetchPostsHandler = async (
   filterSources = [],
   filterAuthors = [],
 ) => {
+  const Categories = filterCategories.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  const Authors = filterAuthors.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
 
-  if (filterAuthors.length > 0) return []; // this api doesn't support filtering by author
-  if (filterSources?.length > 0 && !filterSources.includes("the guardian")) return []; // this api is for the guardian as a source only
+  if (Authors.length > 0) return []; // this api doesn't support filtering by author
+  console.log(filterSources);
+  
+  if (filterSources?.length > 0 && !filterSources.some(source => source.displayName.toLowerCase() == "the guardian")) return []; // this api is for the guardian as a source only
 
   const headers = {
     Accept: "application/json",
@@ -34,7 +38,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
 
     ...(filterDateStart && ({ "from-date": filterDateStart })),
     ...(filterDateEnd && ({ "to-date": filterDateEnd })),
-    ...(filterCategories.length > 0 && ({ section: filterCategories.join("|") })),
+    ...(Categories.length > 0 && ({ section: Categories.join("|") })),
 
     "order-by": "newest",
     "show-fields": "trailText,thumbnail,short-url",
@@ -60,11 +64,11 @@ const fetchPostsHandler: FetchPostsHandler = async (
 
   const transformedResults = response.data.response.results.map((article) => {
     const authors = (article.references && article.references.length > 0 && ([{ displayName: article.references[0].id.split("/")[1], clientsCompatibleValues: { [clientName]: [article.references[0].id] } }] as Tag[])) || [];
-   
+
     // we used sectionName as category for this api we could use tags also
     const categories = (article.sectionName && [{ displayName: article.sectionName, clientsCompatibleValues: { [clientName]: [article.sectionId] } }] || []);
     const source = { displayName: "The Guardian", clientsCompatibleValues: { [clientName]: ["the guardian"] } } as Tag;
-  
+
     return ({
       sourceClient: clientName,
       id: article.id,

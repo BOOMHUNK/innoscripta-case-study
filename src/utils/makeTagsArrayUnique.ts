@@ -31,6 +31,7 @@ const MakeTagsArrayUnique = (tags: Tag[]) => {
         }
     });
 
+
     // Convert the map to an array.
     return Object.values(mergedTagsMap);
 };

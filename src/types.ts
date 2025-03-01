@@ -34,9 +34,9 @@ export type FetchPostsHandler = (
   pageNumber?: number,
   filterDateStart?: string,
   filterDateEnd?: string,
-  filterCategories?: string[],
-  filterSources?: string[],
-  filterAuthors?: string[],
+  filterCategories?: Tag[],
+  filterSources?: Tag[],
+  filterAuthors?: Tag[],
 ) => Promise<Article[]>;
 
 
@@ -60,9 +60,9 @@ export interface IClientFactory {
     pageNumber?: number,
     filterDateStart?: string,
     filterDateEnd?: string,
-    filterCategories?: string[],
-    filterSources?: string[],
-    filterAuthors?: string[]
+    filterCategories?: Tag[],
+    filterSources?: Tag[],
+    filterAuthors?: Tag[]
   ) => Promise<Article[]>;
   getCategories?: (prefix: string) => Promise<Tag[]>;
   getSources?: (prefix: string) => Promise<Tag[]>;

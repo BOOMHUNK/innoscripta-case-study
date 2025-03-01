@@ -36,9 +36,10 @@ const fetchAggregatedPosts = async (
       targetDay, // startDate
       targetDay, // endDate
       // Transform tags to clients-compatible values.
-      categories.map(item => item.clientsCompatibleValues[client.name]).flat() || [],
-      sources.map(item => item.clientsCompatibleValues[client.name]).flat() || [],
-      authors.map(item => item.clientsCompatibleValues[client.name]).flat() || []
+      categories,
+      sources,
+      authors
+
     )
   );
 

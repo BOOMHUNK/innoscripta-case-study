@@ -23,6 +23,9 @@ const fetchPostsHandler: FetchPostsHandler = async (
   filterSources = [],
   filterAuthors = [],
 ) => {
+  const Categories = filterCategories.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  const Sources = filterSources.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  const Authors = filterAuthors.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
 
   const body: NewsApiPosts_Request = {
 
@@ -42,9 +45,9 @@ const fetchPostsHandler: FetchPostsHandler = async (
     dateEnd: filterDateEnd,
     articlesPage: pageNumber,
     articlesCount: pageSize,
-    categoryUri: filterCategories,
-    sourceUri: filterSources,
-    authorUri: filterAuthors,
+    categoryUri: Categories,
+    sourceUri: Sources,
+    authorUri: Authors,
     apiKey,
   };
   const response = await axios.post<NewsApiPosts_Response>(baseUrl + endpoint, body, {
