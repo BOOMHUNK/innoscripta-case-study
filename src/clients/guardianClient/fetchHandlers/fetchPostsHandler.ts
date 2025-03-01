@@ -1,7 +1,5 @@
 import axios from "axios";
-
 import { FetchPostsHandler, Tag } from "@/types";
-import { MakeTagsArrayUnique } from "@/utils";
 import { EachApiPageSize } from "@/configs";
 import { GuardianPosts_Request, GuardianPosts_Response } from "./dto";
 
@@ -24,60 +22,67 @@ const fetchPostsHandler: FetchPostsHandler = async (
   filterAuthors = [],
 ) => {
 
-  const body: GuardianPosts_Request = {
+  if (filterAuthors.length > 0) return []; // this api doesn't support filtering by author
+  if (filterSources?.length > 0 && !filterSources.includes("the guardian")) return []; // this api is for the guardian as a source only
 
-    action: "getArticles",
-    articlesSortBy: "date",
-    articlesSortByAsc: false,
-    resultType: "articles",
-    forceMaxDataTimeWindow: 31,
-    includeArticleCategories: true,
-    includeArticleImage: true,
-    includeArticleAuthors: true,
-    lang: ["eng"],
-    keywordOper: "or",
-
-    keyword: queryString?.trim()?.split(' ') || "",
-    dateStart: filterDateStart,
-    dateEnd: filterDateEnd,
-    articlesPage: pageNumber,
-    articlesCount: pageSize,
-    categoryUri: filterCategories,
-    sourceUri: filterSources,
-    authorUri: filterAuthors,
-    apiKey,
+  const headers = {
+    Accept: "application/json",
   };
-  const response = await axios.post<GuardianPosts_Response>(baseUrl + endpoint, body, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+
+  // build request data
+  const reqData: GuardianPosts_Request = {
+    ...((queryString?.trim() || "") && ({ q: queryString })),
+    page: pageNumber,
+    "page-size": pageSize,
+
+    ...(filterDateStart && ({ "from-date": filterDateStart })),
+    ...(filterDateEnd && ({ "to-date": filterDateEnd })),
+    ...(filterCategories.length > 0 && ({ section: filterCategories.join("|") })),
+
+    "order-by": "newest",
+    "show-fields": "trailText,thumbnail,short-url",
+    "show-references": "author",
+    "api-key": (apiKey || "test"),
+  }
+
+  const params = new URLSearchParams({
+    ...reqData,
+    "page-size": String(pageSize),
+    page: String(pageNumber),
   });
 
-  if (!response.data.articles || !Array.isArray(response.data.articles.results)) return [];
+  const url = `${baseUrl + endpoint}?${params.toString()}`;
 
-  return response.data.articles.results.map((article) => {
-    const categories = article.categories?.flatMap(item => ({ displayName: convertCategoryLabelToDisplayName(item.label), clientsCompatibleValues: { [clientName]: [item.uri] } } as Tag)) || [];
+  const response = await axios.get<GuardianPosts_Response>(url, {
+    headers,
+  });
 
-    const authors = article.authors?.flatMap(item => ({ displayName: item.name, clientsCompatibleValues: { [clientName]: [item.uri] } } as Tag)) || [];
 
-    const source = article.source && ({ displayName: article.source?.title, clientsCompatibleValues: { [clientName]: [article.source?.uri] } } as Tag);
+  if (!Array.isArray(response.data?.response.results)) return [];
+
+
+  const transformedResults = response.data.response.results.map((article) => {
+    const authors = (article.references && article.references.length > 0 && ([{ displayName: article.references[0].id.split("/")[1], clientsCompatibleValues: { [clientName]: [article.references[0].id] } }] as Tag[])) || [];
+
+    const source = { displayName: "The Guardian", clientsCompatibleValues: { [clientName]: ["the guardian"] } } as Tag;
 
     return ({
       sourceClient: clientName,
-      id: article.uri,
-      title: article.title,
-      description: article.body?.slice(0, 200) || "",
-      content: article.body || "",
-      url: article.url,
-      imageUrl: article.image || "",
-      publishedAt: article.dateTimePub,
+      id: article.id,
+      title: article.webTitle,
+      description: article.fields?.trailText?.slice(0, 200) || "",
+      content: article.fields?.trailText || "",
+      url: article.webUrl,
+      imageUrl: article.fields?.thumbnail || "",
+      publishedAt: article.webPublicationDate,
 
-      categories: MakeTagsArrayUnique(categories),
+      categories: [] as Tag[],
       authors: authors,
       source: source,
     })
   });
 
-};
-export default fetchPostsHandler;
+
+  return transformedResults;
+
+}; export default fetchPostsHandler;

@@ -34,7 +34,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
 
     // build request data
     const reqData: NewsApiOrgPosts_Request = {
-      q: queryString || "",
+      ...((queryString?.trim() || "") && { q: queryString }),
       pageSize: pageSize,
       page: pageNumber,
       sortBy: "publishedAt",
@@ -92,7 +92,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
   if (!response.data.articles || !Array.isArray(response.data.articles)) return [];
 
   return response.data.articles.map((article) => {
-    const author = (article.author && ([{ displayName: article.author, clientsCompatibleValues: { [clientName]: [article.author] } }] as Tag[])) || [];
+    const authors = (article.author && ([{ displayName: article.author, clientsCompatibleValues: { [clientName]: [article.author] } }] as Tag[])) || [];
     const source = (article.source && ({ displayName: article.source.name, clientsCompatibleValues: { [clientName]: [article.source.id || article.source.name] } } as Tag)) || {};
 
     return ({
@@ -106,7 +106,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
       publishedAt: article.publishedAt,
 
       categories: [] as Tag[],
-      authors: author,
+      authors: authors,
       source: source,
     })
   });

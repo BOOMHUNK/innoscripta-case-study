@@ -1,6 +1,6 @@
-import { guardian_baseUrl, guardian_key, newsApiOrg_baseUrl, newsApiOrg_key } from "@/configs";
+import { guardian_baseUrl, guardian_key } from "@/configs";
 import ClientFactory from "../clientFactory";
-import { fetchCategoriesHandler, fetchPostsHandler, fetchSourcesHandler } from "./fetchHandlers";
+import { fetchCategoriesHandler, fetchPostsHandler, fetchSourcesHandler, } from "./fetchHandlers";
 
 
 // Create an API client for Event Registry using the improved structure
@@ -13,6 +13,10 @@ const client = new ClientFactory(
 
   "/sections",
   fetchCategoriesHandler,
+  
+  undefined,
+  fetchSourcesHandler,
+
 );
 
 export default client;

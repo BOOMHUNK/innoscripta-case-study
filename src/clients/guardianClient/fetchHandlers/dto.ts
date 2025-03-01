@@ -8,8 +8,6 @@ export type GuardianPosts_Request = {
   'from-date'?: string;
   'to-date'?: string;  // accepted format: yyyy-mm-dd
 
-
-  "show-section"?: true;
   'show-references'?: "author";
   'show-fields'?: "trailText,thumbnail,short-url";
   "order-by"?: "newest" | "oldest" | "relevance";  // defaults to newst
@@ -20,50 +18,54 @@ export type GuardianPosts_Request = {
 
 
 export type GuardianPosts_Response = {
-  currentPage: number;
-  pageSize: number;
-  pages: number;
-  startIndex: number,
-  total: number;
-  orderBy?: "newest" | "oldest" | "relevance";
+  response: {
+    status: "ok";
+    currentPage: number;
+    pageSize: number;
+    pages: number;
+    startIndex: number,
+    total: number;
+    orderBy?: "newest" | "oldest" | "relevance";
 
-  results: {
-    id: string;
-    sectionId: string;
-    sectionName: string;
-    webPublicationDate: string;    // example 2022-10-21T14:06:14Z
-    webUrl: string;
-    apiUrl: string;
-    webTitle: string;
-    fields?: {
-      trailText: string;
-      thumbnail: string;
-      shortUrl: string;
-    }
-    references?: {
-      id?: string; // example "author/robert-louis-stevenson"
-      type?: "author";
+    results: {
+      id: string;
+      sectionId: string;
+      sectionName: string;
+      webPublicationDate: string;    // example 2022-10-21T14:06:14Z
+      webUrl: string;
+      apiUrl: string;
+      webTitle: string;
+      fields?: {
+        trailText: string;
+        thumbnail: string;
+        shortUrl: string;
+      }
+      references?: {
+        id: string; // example "author/robert-louis-stevenson"
+        type?: "author";
+      }[]
     }[]
   }
-}[];
+};
 
 
 
 
 export type GuardianCategories_Request = {
   "api-key": "test" | string;
-  format: "json";
   q?: string;
 }
 
 
 export type GuardianCategories_Response = {
-  status: "ok";
-  total: number;
-  results: {
-    webUrl: string;
-    apiUrl: string;
-    webTitle: string;
-    id: string;
-  }[],
+  response: {
+    status: "ok";
+    total: number;
+    results: {
+      webUrl: string;
+      apiUrl: string;
+      webTitle: string;
+      id: string;
+    }[],
+  }
 }

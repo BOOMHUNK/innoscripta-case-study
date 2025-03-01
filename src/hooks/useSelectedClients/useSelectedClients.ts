@@ -12,7 +12,7 @@ export default function useSelectedClients() {
         .map((name) => AvailableClients[name])
         .filter((client): client is ClientFactory => Boolean(client)); // Ensure filtering out undefined values
 
-    // console.log(clientsArray);
+
 
     return clientsArray;
 }
