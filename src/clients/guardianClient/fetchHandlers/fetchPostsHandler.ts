@@ -63,9 +63,11 @@ const fetchPostsHandler: FetchPostsHandler = async (
 
   const transformedResults = response.data.response.results.map((article) => {
     const authors = (article.references && article.references.length > 0 && ([{ displayName: article.references[0].id.split("/")[1], clientsCompatibleValues: { [clientName]: [article.references[0].id] } }] as Tag[])) || [];
-
+   
+    // we used sectionName as category for this api we could use tags also
+    const categories = (article.sectionName && [{ displayName: article.sectionName, clientsCompatibleValues: { [clientName]: [article.sectionId] } }] || []);
     const source = { displayName: "The Guardian", clientsCompatibleValues: { [clientName]: ["the guardian"] } } as Tag;
-
+  
     return ({
       sourceClient: clientName,
       id: article.id,
@@ -76,7 +78,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
       imageUrl: article.fields?.thumbnail || "",
       publishedAt: article.webPublicationDate,
 
-      categories: [] as Tag[],
+      categories: categories,
       authors: authors,
       source: source,
     })
