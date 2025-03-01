@@ -1,4 +1,7 @@
+import Navbar from "./Navbar";
 import NewsFeed from "./NewsFeed";
 import ArticleCard from "./ArticleCard";
-import Filters from "./Filters";
-export { NewsFeed, ArticleCard, Filters };
+import SearchSection from "./SearchSection";
+import ModalFilters from "./ModalFilters";
+
+export { Navbar, NewsFeed, ArticleCard, SearchSection, ModalFilters };

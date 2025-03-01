@@ -2,7 +2,7 @@ import { Article } from "@/types";
 import { forwardRef } from "react"
 import { Tagchip } from "@/components";
 import { useDispatch } from "react-redux";
-import { setCategories } from "@/store/newsSlice";
+import { setCategories } from "@/store/filtersSlice";
 import { calculateTimeAgo } from "@/utils";
 import "./style.css";
 

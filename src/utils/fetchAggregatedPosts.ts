@@ -11,7 +11,9 @@ import { Article, Tag } from "@/types";
  * @param pageSize - Number of articles to fetch per API.
  * @param _startDate - Optional filter: only fetch articles published on/after this day.
  * @param _endDate - Optional filter: only fetch articles published on/before this day (should equal dayCursor initially).
- * @param categories, sources, authors - Arrays of Tags for filtering.
+ * @param categories - Arrays of Tags for filtering.
+ * @param sources - Arrays of Tags for filtering.
+ * @param authors - Arrays of Tags for filtering.
  */
 const fetchAggregatedPosts = async (
   clients: ClientFactory[],

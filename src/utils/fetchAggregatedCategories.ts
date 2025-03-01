@@ -16,8 +16,6 @@ const fetchAggregatedCategories = async (
 
     // Wait for all clients to return results
     const results = await Promise.all(fetchPromises);
-    // ToDo: Skip repeating fetch of categories from APIs which we already have values from them.
-
     // Flatten the results to a single array.
     const flatTags: Tag[] = results.flat();
 

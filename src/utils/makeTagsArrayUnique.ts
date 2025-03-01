@@ -1,9 +1,17 @@
 import { Tag } from "@/types";
 
+/**
+ * Removes duplicate tags from the provided array by merging tags with the same `displayName` property.
+ * The `clientsCompatibleValues` property is also merged for each unique tag.
+ *
+ * Creates a map to merge tags by displayName.
+ * This will ensure that we don't have duplicate tags with the same displayName.
+ * Also it will merge all the clientsCompatibleValues arrays for each client.
+ * 
+ * @param tags - An array of `Tag` objects to be processed.
+ * @returns A new array of unique `Tag` objects.
+ */
 const MakeTagsArrayUnique = (tags: Tag[]) => {
-    // Create a map to merge tags by displayName.
-    // This will ensure that we don't have duplicate tags with the same displayName.
-    // Also it will merge all the clientsCompatibleValues arrays for each client.
     const mergedTagsMap: { [key: string]: Tag } = {};
 
     tags.forEach((tag) => {

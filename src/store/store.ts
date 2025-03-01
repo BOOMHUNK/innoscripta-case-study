@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import newsReducer from "./newsSlice";
+import filtersReducer from "./filtersSlice";
+import preferencesSlice from "./preferencesSlice";
 
 export const store = configureStore({
   reducer: {
-    news: newsReducer,
+    filters: filtersReducer,
+    preferences: preferencesSlice,
   },
 });
 // Type definitions for Redux
