@@ -23,7 +23,7 @@ const fetchAggregatedPosts = async (
     client.getPosts(
       queryString,
       pageSize,
-      pageNum,
+      1, // force a fixed page number for each client caues we paginate based on timestamp
       startDate,
       endDate,
       // Transform tags(categories, sources and authors) to clients-compatible values

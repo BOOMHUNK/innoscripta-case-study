@@ -1,5 +1,11 @@
-https://newsapi.ai/documentation?tab=suggAuthors   key 1: "a85611ba-364f-4d29-8181-83923f6721f0"   key 2: "2c3f16a1-5196-40b9-ab3b-4036223e1938"
-https://newsapi.org/docs/endpoints/top-headlines key 1 :"1e4d714851bd475987800fbd815875aa"   key 2: "8974a7c5ae264a7a82c1b9c5a7cadeb8"
+https://newsapi.ai/documentation?tab=suggAuthors   
+key 1: "a85611ba-364f-4d29-8181-83923f6721f0"   key 2: "2c3f16a1-5196-40b9-ab3b-4036223e1938"
+
+
+https://newsapi.org/docs/endpoints/top-headlines 
+key 1 :"0182423da7f4464a8a7240fc492a2b24"  
+
+
 https://open-platform.theguardian.com/documentation/search
 
 

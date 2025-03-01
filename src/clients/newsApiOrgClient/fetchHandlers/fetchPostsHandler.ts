@@ -30,7 +30,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
 
   // if sources or q was available use default endpoint
   // if there was no date filter provided use /top-headlines endpoint else return []
-  if (((Array.isArray(filterSources) && filterSources.length > 0) || queryString?.trim()) && filterCategories?.length == 0) {
+  if ((filterSources.length > 0 || queryString?.trim()) && filterCategories?.length == 0) {
 
     // build request data
     const reqData: NewsApiOrgPosts_Request = {
@@ -57,7 +57,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
     });
   } else {
     if (filterDateStart || filterDateEnd) {
-      return []; // This API doesn't support filtering by date
+      return []; // This endpoint doesn't support filtering by date
     } else {
 
       if (filterSources.length > 0 && filterSources.length > 0) return [];  // can't use both categories and sources in this api
