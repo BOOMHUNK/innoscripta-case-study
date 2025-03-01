@@ -6,8 +6,8 @@ export type NewsApiOrgPosts_Request = {
   category?: "business" | "entertainment" | "general" | "health" | "science" | "sports" | "technology";
   searchIn?: "title" | "description" | "content";
   domains?: string;
-  from?: string;        // in ISO 8601 format
-  to?: string;          // in ISO 8601 format
+  from?: string;
+  to?: string;
   language?: "ar" | "de" | "en" | "es" | "fr" | "he" | "it" | "nl" | "no" | "pt" | "ru" | "sv" | "ud" | "zh";
   sortBy?: "relevancy" | "popularity" | "publishedAt";
   page?: number;

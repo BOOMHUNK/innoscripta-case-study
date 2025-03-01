@@ -43,14 +43,14 @@ export default function Filters() {
             label="From:"
             type="date"
             placeholder="Start Date"
-            debounceTime={700}
+            debounceTime={500}
             onChange={(v) => dispatch(setStartDate(v))}
           />
           <TextInput
             label="To:"
             type="date"
             placeholder="End Date"
-            debounceTime={700}
+            debounceTime={500}
             onChange={(v) => dispatch(setEndDate(v))}
           />
         </div>
@@ -60,7 +60,7 @@ export default function Filters() {
           <AutoSuggestTagInput
             label="Categories:"
             placeholder="Type to search categories..."
-            debounceTime={700}
+            debounceTime={300}
             fetchSuggestions={async (query) => await fetchAggregatedCategories(clients, query)}
             onChange={(tags) => dispatch(setCategories(tags))}
             value={selectedCategories}
@@ -68,7 +68,7 @@ export default function Filters() {
           <AutoSuggestTagInput
             label="Sources:"
             placeholder="Type to search sources..."
-            debounceTime={700}
+            debounceTime={300}
             fetchSuggestions={async (query) => await fetchAggregatedSources(clients, query)}
             onChange={(tags) => dispatch(setSources(tags))}
             value={selectedSources}
@@ -76,7 +76,7 @@ export default function Filters() {
           <AutoSuggestTagInput
             label="Authors:"
             placeholder="Type to search authors..."
-            debounceTime={700}
+            debounceTime={300}
             fetchSuggestions={async (query) => await fetchAggregatedAuthors(clients, query)}
             onChange={(tags) => dispatch(setAuthors(tags))}
             value={selectedAuthors}

@@ -1,12 +1,13 @@
-export const newsApiKey = import.meta.env.VITE_NEWS_API_KEY as string;
-export const newsApiBaseUrl = import.meta.env.VITE_NEWS_API_BASE_URL as string;
+export const newsApi_key = import.meta.env.VITE_NEWS_API_KEY as string;
+export const newsApi_baseUrl = import.meta.env.VITE_NEWS_API_BASE_URL as string;
 
 
-export const newsApiOrgKey = import.meta.env.VITE_NEWS_API_ORG_KEY as string;
-export const newsApiOrgBaseUrl = import.meta.env.VITE_NEWS_API_ORG_BASE_URL as string;
+export const newsApiOrg_key = import.meta.env.VITE_NEWS_API_ORG_KEY as string;
+export const newsApiOrg_baseUrl = import.meta.env.VITE_NEWS_API_ORG_BASE_URL as string;
 
 
-export const guardianApiKey = import.meta.env.VITE_GUARDIAN_API_KEY as string;
+export const guardian_key = import.meta.env.VITE_GUARDIAN_KEY as string;
+export const guardian_baseUrl = import.meta.env.VITE_GUARDIAN_BASE_URL as string;
 
 // we use feature flag env vars to be able to turn on/off features
 export const ff_useNewsApi = (import.meta.env.VITE_FF_USE_NEWS_API as string || "false") == "true";

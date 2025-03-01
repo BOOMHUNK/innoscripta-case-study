@@ -25,7 +25,7 @@ export default function AutoSuggestTagInput({
   fetchSuggestions,
   value,
   onChange,
-  debounceTime = 500,
+  debounceTime = 200,
 }: AutoSuggestTagInputProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -45,6 +45,7 @@ export default function AutoSuggestTagInput({
   const debouncedInput = useDebounce(inputValue, debounceTime);
   const deferredInput = useDeferredValue(debouncedInput);
 
+
   // When the deferred input changes, fetch suggestions if non-empty.
   useEffect(() => {
     if (deferredInput.trim() !== "") {
@@ -59,6 +60,7 @@ export default function AutoSuggestTagInput({
         });
     } else {
       setSuggestions([]);
+      setFetchingState("idle");
     }
   }, [deferredInput, fetchSuggestions]);
 
@@ -80,8 +82,6 @@ export default function AutoSuggestTagInput({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
-
-
 
   return (
     <div className="autosuggest input-container" ref={ref}>
@@ -105,11 +105,11 @@ export default function AutoSuggestTagInput({
             </div>
           )}
         </div>
-        {(inputValue || suggestions.length > 0) && (
+        {(deferredInput) && (
           <div className="suggestions-dropdown">
-            <CgSpinnerAlt
-              className={`spinner ${suggestions.length > 0 && fetchingState !== "fetching" ? "hidden" : ""}`}
-            />
+            {fetchingState !== "fetching" && suggestions.length == 0 && <span className="no-results">no results</span>}
+            <CgSpinnerAlt className={`spinner ${fetchingState !== "fetching" ? "hidden" : ""}`} />
+
             {suggestions.map((suggestion) => (
               <Tagchip key={suggestion.displayName} onClick={() => addTag(suggestion)} value={suggestion} />
             ))}

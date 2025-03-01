@@ -42,7 +42,7 @@ const fetchAggregatedPosts = async (
     .sort((a, b) => {
       const aTime = new Date(a.publishedAt).getTime();
       const bTime = new Date(b.publishedAt).getTime();
-      console.log("Comparing", aTime, bTime);
+      // console.log("Comparing", aTime, bTime);
       return bTime - aTime;
     });
 

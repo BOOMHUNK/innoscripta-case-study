@@ -1,9 +1,9 @@
 import axios from "axios";
-import { NewsApiPosts_Request, NewsApiPosts_Response } from "./dto";
+
 import { FetchPostsHandler, Tag } from "@/types";
-import { convertCategoryLabelToDisplayName } from "../utils";
-import {  MakeTagsArrayUnique } from "@/utils";
+import { MakeTagsArrayUnique } from "@/utils";
 import { EachApiPageSize } from "@/configs";
+import { GuardianPosts_Request, GuardianPosts_Response } from "./dto";
 
 
 
@@ -24,7 +24,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
   filterAuthors = [],
 ) => {
 
-  const body: NewsApiPosts_Request = {
+  const body: GuardianPosts_Request = {
 
     action: "getArticles",
     articlesSortBy: "date",
@@ -47,7 +47,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
     authorUri: filterAuthors,
     apiKey,
   };
-  const response = await axios.post<NewsApiPosts_Response>(baseUrl + endpoint, body, {
+  const response = await axios.post<GuardianPosts_Response>(baseUrl + endpoint, body, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",

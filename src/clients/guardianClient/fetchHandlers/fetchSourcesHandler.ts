@@ -4,9 +4,9 @@ import axios from "axios";
 
 
 // since the request doesnt support querying we will do a simple cache on the first request
-const sourcesCached: {  [q: string]: { name: string, id: string, [key: string]: any }[] } = { };
+const sourcesCached: { q: string, sources: { name: string, id: string, [key: string]: any }[] } = { q: "", sources: [] };
 const fetchSourcesHandler: FetchTagsHandler = async (clientName, baseUrl, endpoint, apiToken, prefix) => {
-    if (!sourcesCached[prefix]) {
+    if (sourcesCached.q != prefix) {
         const response = await axios.get<NewsApiOrgSources_Response>(baseUrl + endpoint, {
             headers: {
                 Accept: "application/json",
@@ -16,11 +16,12 @@ const fetchSourcesHandler: FetchTagsHandler = async (clientName, baseUrl, endpoi
 
         if (response.data?.status != "ok" || !Array.isArray(response.data.sources)) return [];
 
-        sourcesCached[prefix] = response.data.sources;
+        sourcesCached.q = prefix;
+        sourcesCached.sources = response.data.sources;
     }
 
     // filter sources by prefix and sort by length then return first 50
-    const matches = (sourcesCached[prefix]
+    const matches = (sourcesCached.sources
         .reduce((acc, rawSource) => {
             if (rawSource.name.toLowerCase().includes(prefix.toLowerCase())) {
                 acc.push({

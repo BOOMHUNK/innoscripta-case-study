@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { NewsApiOrgHeadlines_Request, NewsApiOrgPosts_Request, NewsApiOrgPosts_Response } from "../dto";
+import { NewsApiOrgHeadlines_Request, NewsApiOrgPosts_Request, NewsApiOrgPosts_Response } from "./dto";
 import { FetchPostsHandler, Tag } from "@/types";
 import { EachApiPageSize } from "@/configs";
 
@@ -19,7 +19,9 @@ const fetchPostsHandler: FetchPostsHandler = async (
   filterDateEnd,
   filterCategories = [],
   filterSources = [],
+  filterAuthors = [],
 ) => {
+  if (filterAuthors.length > 0) return []; // this api doesn't support filtering by author
   let response: AxiosResponse<NewsApiOrgPosts_Response, any>;
   const headers = {
     Accept: "application/json",
@@ -55,7 +57,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
     });
   } else {
     if (filterDateStart || filterDateEnd) {
-      return [];
+      return []; // This API doesn't support filtering by date
     } else {
 
       if (filterSources.length > 0 && filterSources.length > 0) return [];  // can't use both categories and sources in this api

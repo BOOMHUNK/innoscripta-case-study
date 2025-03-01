@@ -1,5 +1,5 @@
 import { FetchTagsHandler, Tag } from "@/types";
-import { NewsApiAuthors_Request, NewsApiAuthors_Response } from "../dto";
+import { NewsApiAuthors_Request, NewsApiAuthors_Response } from "./dto";
 import axios from "axios";
 
 

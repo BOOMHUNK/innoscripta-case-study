@@ -14,7 +14,7 @@ const fetchCategoriesHandler: FetchTagsHandler = (clientName, baseUrl, endpoint,
     ];
     return Promise.resolve(categories
         .reduce((acc, category) => {
-            if (category.toLowerCase().includes(prefix.toLowerCase())) {
+            if (category.includes(prefix.toLowerCase())) {
                 acc.push({
                     displayName: category.toLowerCase(),
                     clientsCompatibleValues: { [clientName]: [category] },

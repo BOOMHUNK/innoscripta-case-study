@@ -1,4 +1,4 @@
-import { newsApiBaseUrl, newsApiKey } from "@/configs";
+import { newsApi_baseUrl, newsApi_key } from "@/configs";
 import ClientFactory from "../clientFactory";
 import { fetchAuthorsHandler, fetchCategoriesHandler, fetchPostsHandler, fetchSourcesHandler } from "./fetchHandlers";
 
@@ -7,8 +7,8 @@ import { fetchAuthorsHandler, fetchCategoriesHandler, fetchPostsHandler, fetchSo
 // Create an API client for Event Registry using the improved structure
 const client = new ClientFactory(
   "newsApi",
-  newsApiBaseUrl,
-  newsApiKey,
+  newsApi_baseUrl,
+  newsApi_key,
   "/article/getArticles",
   fetchPostsHandler,
   "/suggestCategoriesFast",
