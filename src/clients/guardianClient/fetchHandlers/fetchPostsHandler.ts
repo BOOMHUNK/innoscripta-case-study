@@ -19,11 +19,8 @@ const fetchPostsHandler: FetchPostsHandler = async (
   filterAuthors = [],
 ) => {
   const Categories = filterCategories.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
-  const Authors = filterAuthors.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
 
-  if (Authors.length > 0) return []; // this api doesn't support filtering by author
-  console.log(filterSources);
-  
+  if (filterAuthors.length > 0) return []; // this api doesn't support filtering by author
   if (filterSources?.length > 0 && !filterSources.some(source => source.displayName.toLowerCase() == "the guardian")) return []; // this api is for the guardian as a source only
 
   const headers = {
@@ -52,19 +49,13 @@ const fetchPostsHandler: FetchPostsHandler = async (
     page: String(pageNumber),
   });
 
+
   const url = `${baseUrl + endpoint}?${params.toString()}`;
-
-  const response = await axios.get<GuardianPosts_Response>(url, {
-    headers,
-  });
-
-
+  const response = await axios.get<GuardianPosts_Response>(url, { headers });
   if (!Array.isArray(response.data?.response.results)) return [];
-
 
   const transformedResults = response.data.response.results.map((article) => {
     const authors = (article.references && article.references.length > 0 && ([{ displayName: article.references[0].id.split("/")[1], clientsCompatibleValues: { [clientName]: [article.references[0].id] } }] as Tag[])) || [];
-
     // we used sectionName as category for this api we could use tags also
     const categories = (article.sectionName && [{ displayName: article.sectionName, clientsCompatibleValues: { [clientName]: [article.sectionId] } }] || []);
     const source = { displayName: "The Guardian", clientsCompatibleValues: { [clientName]: ["the guardian"] } } as Tag;

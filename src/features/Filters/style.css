@@ -1,5 +1,5 @@
 .filters {
-  margin-top: 96px;
+
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -7,8 +7,6 @@
   justify-content: flex-start;
   z-index: 20;
   @media (max-width: 768px) {
-    margin-top: 150px;
-
     & * {
       font-size: 14px !important;
     }

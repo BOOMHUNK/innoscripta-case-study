@@ -49,6 +49,7 @@ const useAggregatedNews = () => {
       return nextCursor;
     },
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 };
 

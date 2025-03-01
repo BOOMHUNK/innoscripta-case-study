@@ -59,6 +59,13 @@ const newsSlice = createSlice({
     setArticlesPerPage: (state, action: PayloadAction<number>) => {
       state.pageSize = action.payload;
     },
+    resetFilters: (state) => {
+      state.categories = [];
+      state.sources = [];
+      state.authors = [];
+      state.startDate = "";
+      state.endDate = "";
+    }
   },
 });
 
@@ -71,5 +78,6 @@ export const {
   setStartDate,
   setEndDate,
   setArticlesPerPage,
+  resetFilters,
 } = newsSlice.actions;
 export default newsSlice.reducer;

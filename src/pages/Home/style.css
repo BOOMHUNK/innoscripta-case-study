@@ -5,5 +5,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-
+  padding-top: 96px;
+  @media (max-width: 768px) {
+    padding-top: 150px;
+  }
 }
