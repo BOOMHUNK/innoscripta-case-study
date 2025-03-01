@@ -2,17 +2,20 @@ import axios from "axios";
 import { NewsApiPosts_Request, NewsApiPosts_Response } from "../dto";
 import { FetchPostsHandler, Tag } from "@/types";
 import { convertCategoryLabelToDisplayName } from "../utils";
-import { MakeCategoriesArrayUnique } from "../../utils";
+import {  MakeTagsArrayUnique } from "@/utils";
+import { EachApiPageSize } from "@/configs";
+
 
 
 
 const fetchPostsHandler: FetchPostsHandler = async (
   clientName,
+  baseUrl,
   endpoint,
   apiKey,
 
   queryString = "",
-  pageSize = 10,
+  pageSize = EachApiPageSize,
   pageNumber = 1,
   filterDateStart,
   filterDateEnd,
@@ -20,7 +23,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
   filterSources = [],
   filterAuthors = [],
 ) => {
-  //   console.log("req data", data);
+
   const body: NewsApiPosts_Request = {
 
     action: "getArticles",
@@ -44,13 +47,13 @@ const fetchPostsHandler: FetchPostsHandler = async (
     authorUri: filterAuthors,
     apiKey,
   };
-  const response = await axios.post<NewsApiPosts_Response>(endpoint, body, {
+  const response = await axios.post<NewsApiPosts_Response>(baseUrl + endpoint, body, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
   });
-  //   console.log("raw data", response.data);
+
   if (!response.data.articles || !Array.isArray(response.data.articles.results)) return [];
 
   return response.data.articles.results.map((article) => {
@@ -68,9 +71,9 @@ const fetchPostsHandler: FetchPostsHandler = async (
       content: article.body || "",
       url: article.url,
       imageUrl: article.image || "",
-      publishedAt: article.dateTime,
+      publishedAt: article.dateTimePub,
 
-      categories: MakeCategoriesArrayUnique(categories),
+      categories: MakeTagsArrayUnique(categories),
       authors: authors,
       source: source,
     })

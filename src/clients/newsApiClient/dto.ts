@@ -40,6 +40,7 @@ export interface NewsApiPosts_Response {
       uri: string;
       lang: string;
       dateTime: string;
+      dateTimePub: string;
       url: string;
       title: string;
       body?: string;

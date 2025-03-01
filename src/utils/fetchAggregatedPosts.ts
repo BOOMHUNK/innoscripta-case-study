@@ -1,5 +1,7 @@
 import { ClientFactory } from "@/clients";
+import { EachApiPageSize } from "@/configs";
 import { Article, Tag } from "@/types";
+
 
 /**
  * Aggregates articles from multiple APIs using the provided clients and filters stored in redux states.
@@ -7,7 +9,7 @@ import { Article, Tag } from "@/types";
 const fetchAggregatedPosts = async (
   clients: ClientFactory[], // List of API clients
   queryString?: string,
-  pageSize = 10,
+  pageSize = EachApiPageSize,
   pageNum = 1,
   startDate?: string,
   endDate?: string,
@@ -25,9 +27,9 @@ const fetchAggregatedPosts = async (
       startDate,
       endDate,
       // Transform tags(categories, sources and authors) to clients-compatible values
-      categories.map(item => item.clientsCompatibleValues[client.name as keyof typeof item.clientsCompatibleValues]).flat() || [],
-      sources.map(item => item.clientsCompatibleValues[client.name as keyof typeof item.clientsCompatibleValues]).flat() || [],
-      authors.map(item => item.clientsCompatibleValues[client.name as keyof typeof item.clientsCompatibleValues]).flat() || [],
+      categories.map(item => item.clientsCompatibleValues[client.name]).flat() || [],
+      sources.map(item => item.clientsCompatibleValues[client.name]).flat() || [],
+      authors.map(item => item.clientsCompatibleValues[client.name]).flat() || [],
     )
   );
 
@@ -37,10 +39,12 @@ const fetchAggregatedPosts = async (
   // Flatten the array and sort by date
   const allArticles = results
     .flat()
-    .sort(
-      (a, b) =>
-        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    );
+    .sort((a, b) => {
+      const aTime = new Date(a.publishedAt).getTime();
+      const bTime = new Date(b.publishedAt).getTime();
+      console.log("Comparing", aTime, bTime);
+      return bTime - aTime;
+    });
 
   return allArticles;
 };

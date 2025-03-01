@@ -1,5 +1,6 @@
-import { ClientFactory, MakeCategoriesArrayUnique } from "@/clients";
+import { ClientFactory } from "@/clients";
 import { Tag } from "@/types";
+import { MakeTagsArrayUnique } from "@/utils";
 
 /**
  * Aggregates suggested categories from multiple APIs.
@@ -21,7 +22,7 @@ const fetchAggregatedCategories = async (
     const flatTags: Tag[] = results.flat();
 
     // Remove duplicates from the array.
-    return MakeCategoriesArrayUnique(flatTags);
+    return MakeTagsArrayUnique(flatTags);
 
 };
 export default fetchAggregatedCategories;

@@ -1,5 +1,4 @@
-
-import { newsApiBaseUrl, newsApiKey } from "@/utils";
+import { newsApiBaseUrl, newsApiKey } from "@/configs";
 import ClientFactory from "../clientFactory";
 import { fetchAuthorsHandler, fetchCategoriesHandler, fetchPostsHandler, fetchSourcesHandler } from "./fetchHandlers";
 

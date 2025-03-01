@@ -1,13 +1,13 @@
 import { Tag } from "@/types";
 
-export const MakeCategoriesArrayUnique = (tags: Tag[]) => {
+const MakeTagsArrayUnique = (tags: Tag[]) => {
     // Create a map to merge tags by displayName.
     // This will ensure that we don't have duplicate tags with the same displayName.
     // Also it will merge all the clientsCompatibleValues arrays for each client.
     const mergedTagsMap: { [displayName: string]: Tag } = {};
 
     tags.forEach((tag) => {
-        if (!mergedTagsMap[tag.displayName]) {
+        if (!mergedTagsMap[tag.displayName.toLowerCase()]) {
             // If this is the first occurrence, add it to the map.
             mergedTagsMap[tag.displayName] = {
                 displayName: tag.displayName,
@@ -18,14 +18,14 @@ export const MakeCategoriesArrayUnique = (tags: Tag[]) => {
             const existing = mergedTagsMap[tag.displayName];
             for (const clientName in tag.clientsCompatibleValues) {
 
-                if (!Array.isArray(existing.clientsCompatibleValues[clientName as keyof typeof existing.clientsCompatibleValues])) {
-                    existing.clientsCompatibleValues[clientName as keyof typeof existing.clientsCompatibleValues] = [];
+                if (!Array.isArray(existing.clientsCompatibleValues[clientName])) {
+                    existing.clientsCompatibleValues[clientName] = [];
                 }
 
-                existing.clientsCompatibleValues[clientName as keyof typeof existing.clientsCompatibleValues] = Array.from(
+                existing.clientsCompatibleValues[clientName] = Array.from(
                     new Set([
-                        ...existing.clientsCompatibleValues[clientName as keyof typeof existing.clientsCompatibleValues],
-                        ...(tag.clientsCompatibleValues[clientName as keyof typeof existing.clientsCompatibleValues] || []),
+                        ...existing.clientsCompatibleValues[clientName],
+                        ...(tag.clientsCompatibleValues[clientName] || []),
                     ]));
             }
         }
@@ -34,3 +34,4 @@ export const MakeCategoriesArrayUnique = (tags: Tag[]) => {
     // Convert the map to an array.
     return Object.values(mergedTagsMap);
 }
+export default MakeTagsArrayUnique;

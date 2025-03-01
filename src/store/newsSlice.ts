@@ -1,7 +1,8 @@
-// store/newsSlice.ts
-import { AvailableClients } from "@/clients";
+import { AvailableClients, EachApiPageSize } from "@/configs";
 import { Tag } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+
 
 interface NewsFiltersState {
   clients: string[]; // Store usable clients' names for serializability
@@ -22,7 +23,7 @@ const initialState: NewsFiltersState = {
   authors: [],
   startDate: "",
   endDate: "",
-  pageSize: 10,
+  pageSize: EachApiPageSize,
 };
 
 const newsSlice = createSlice({

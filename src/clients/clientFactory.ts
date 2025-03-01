@@ -36,6 +36,7 @@ export default class ClientFactory implements IClientFactory {
     authorsEndpoint?: string,
     fetchAuthorsHandler?: FetchTagsHandler,
   ) {
+
     this.name = name;
     this.apiToken = apiToken;
     this.baseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl; // make sure the baseUrl doesn't end with a slash (for ease of use)
@@ -74,8 +75,9 @@ export default class ClientFactory implements IClientFactory {
   ): Promise<Article[]> {
     try {
       return await this.fetchPostsHandler(
-        this.name as keyof Tag["clientsCompatibleValues"],
-        this.baseUrl + this.postsEndpoint,
+        this.name,
+        this.baseUrl,
+        this.postsEndpoint,
         this.apiToken,
         queryString,
         pageSize,
@@ -91,20 +93,19 @@ export default class ClientFactory implements IClientFactory {
         `API Request failed: ${error instanceof Error ? error.message : String(error)
         }`
       );
-      throw new Error(
-        `Failed to fetch data from ${this.baseUrl + this.postsEndpoint}`
-      );
+      return Promise.resolve([]);
     }
   }
 
   public async getCategories(prefix: string): Promise<Tag[]> {
-    if (!this.fetchCategoriesHandler || !this.categoriesEndpoint) {
+    if (!this.fetchCategoriesHandler) {
       return Promise.resolve([]);
     }
     try {
       return await this.fetchCategoriesHandler(
-        this.name as keyof Tag["clientsCompatibleValues"],
-        this.baseUrl + this.categoriesEndpoint,
+        this.name,
+        this.baseUrl,
+        (this.categoriesEndpoint || ""),
         this.apiToken,
         prefix,
       );
@@ -113,21 +114,20 @@ export default class ClientFactory implements IClientFactory {
         `GetCategories request failed: ${error instanceof Error ? error.message : String(error)
         }`
       );
-      throw new Error(
-        `Failed to fetch data from ${this.baseUrl + this.postsEndpoint}`
-      );
+      return Promise.resolve([]);
     }
   }
 
 
   public async getSources(prefix: string): Promise<Tag[]> {
-    if (!this.fetchSourcesHandler || !this.sourcesEndpoint) {
+    if (!this.fetchSourcesHandler) {
       return Promise.resolve([]);
     }
     try {
       return await this.fetchSourcesHandler(
-        this.name as keyof Tag["clientsCompatibleValues"],
-        this.baseUrl + this.sourcesEndpoint,
+        this.name,
+        this.baseUrl,
+        (this.sourcesEndpoint || ""),
         this.apiToken,
         prefix,
       );
@@ -136,20 +136,19 @@ export default class ClientFactory implements IClientFactory {
         `GetSources request failed: ${error instanceof Error ? error.message : String(error)
         }`
       );
-      throw new Error(
-        `Failed to fetch data from ${this.baseUrl + this.sourcesEndpoint}`
-      );
+      return Promise.resolve([]);
     }
   }
 
   public async getAuthors(prefix: string): Promise<Tag[]> {
-    if (!this.fetchAuthorsHandler || !this.authorsEndpoint) {
+    if (!this.fetchAuthorsHandler) {
       return Promise.resolve([]);
     }
     try {
       return await this.fetchAuthorsHandler(
-        this.name as keyof Tag["clientsCompatibleValues"],
-        this.baseUrl + this.authorsEndpoint,
+        this.name,
+        this.baseUrl,
+        (this.authorsEndpoint || ""),
         this.apiToken,
         prefix,
       );
@@ -158,9 +157,7 @@ export default class ClientFactory implements IClientFactory {
         `GetAuthors request failed: ${error instanceof Error ? error.message : String(error)
         }`
       );
-      throw new Error(
-        `Failed to fetch data from ${this.baseUrl + this.authorsEndpoint}`
-      );
+      return Promise.resolve([]);
     }
   }
 }

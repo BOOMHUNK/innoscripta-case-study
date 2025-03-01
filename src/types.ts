@@ -1,4 +1,5 @@
-import { AvailableClients } from "./clients";
+import { AvailableClients } from "./configs";
+
 
 export type Tag = {
   displayName: string;
@@ -23,8 +24,9 @@ export type Article = {
 
 
 export type FetchPostsHandler = (
-  clientName: keyof Tag["clientsCompatibleValues"],
-  fullEndpointAddress: string,
+  clientName: keyof typeof AvailableClients,
+  baseUrl: string,
+  endpoint: string,
   apiToken: string,
 
   queryString?: string,
@@ -39,8 +41,9 @@ export type FetchPostsHandler = (
 
 
 export type FetchTagsHandler = (
-  clientName: keyof Tag["clientsCompatibleValues"],
-  fullEndpointAddress: string,
+  clientName: keyof typeof AvailableClients,
+  baseUrl: string,
+  endpoint: string,
   apiToken: string,
 
   prefix: string,
@@ -49,9 +52,9 @@ export type FetchTagsHandler = (
 
 
 export interface IClientFactory {
-  public name: string;
+  name: string;
   // Client methods are responsible for calling the fetch handlers and returning the data in our prefered types.
-  public async getPosts: (
+  getPosts: (
     queryString?: string,
     pageSize?: number,
     pageNumber?: number,
@@ -61,7 +64,7 @@ export interface IClientFactory {
     filterSources?: string[],
     filterAuthors?: string[]
   ) => Promise<Article[]>;
-  public async getCategories?: (prefix: string) => Promise<Tag[]>;
-  public async getSources?: (prefix: string) => Promise<Tag[]>;
-  public async getAuthors?: (prefix: string) => Promise<Tag[]>;
+  getCategories?: (prefix: string) => Promise<Tag[]>;
+  getSources?: (prefix: string) => Promise<Tag[]>;
+  getAuthors?: (prefix: string) => Promise<Tag[]>;
 }
