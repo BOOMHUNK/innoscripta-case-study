@@ -7,8 +7,7 @@ I designed the app to fetch articles from multiple news APIsin flexible enough t
 
 - The project emphasizes modularity and scalability, performance, and maintainability.
 
-
-![screenshot](image-2.png)
+![screenshot](image-3.png)
 ## Overview
 
 **Current API Sources:**

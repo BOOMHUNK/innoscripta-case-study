@@ -33,20 +33,25 @@
   }
   & > .logo {
     position: absolute;
-    left: 0;
+    left: calc(50% + 8px);
+    transform: translateX(-100%);
     font-weight: 400;
     letter-spacing: -0.25em;
     font-size: 44px;
-    transform: translateX(32px) translateY(10px);
+    color: #888;
   }
   & > .title {
     position: absolute;
-    left: 0;
-    top: 0;
+    left: calc(50% - 4px);
+    top: 64px;
+    color: #888;
+    margin-top: -12px;
+    letter-spacing: -0em;
+    transform: translateX(-50%);
+    text-transform: uppercase;
 
-    /* margin-top: -16px; */
-    rotate: -90deg;
-    transform: translateY(-50px) translateX(-60%);
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
   }
   & > .footnotes {
     z-index: 0;
