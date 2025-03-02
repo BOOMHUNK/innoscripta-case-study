@@ -14,3 +14,5 @@ export const ff_useNewsApi = (import.meta.env.VITE_FF_USE_NEWS_API as string || 
 export const ff_useNewsApiOrg = (import.meta.env.VITE_FF_USE_NEWS_API_ORG as string || "false") == "true";
 export const ff_useGuardianApi = (import.meta.env.VITE_FF_USE_GUARDIAN_API as string || "false") == "true";
 
+
+export const maxPostsPerApiRequest = (import.meta.env.VITE_MAX_POSTS_PER_API_REQUEST as number || 5);

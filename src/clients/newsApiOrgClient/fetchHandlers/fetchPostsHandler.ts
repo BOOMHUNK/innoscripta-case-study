@@ -21,10 +21,14 @@ const fetchPostsHandler: FetchPostsHandler = async (
   filterSources = [],
   filterAuthors = [],
 ) => {
-  const Categories = filterCategories.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
-  const Sources = filterSources.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
-  const Authors = filterAuthors.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  let Categories = filterCategories.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  if (Categories.length == 0) Categories = Categories.concat(filterCategories.flatMap(item => item.displayName) ?? []);
 
+  let Sources = filterSources.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  if (Sources.length == 0) Sources = Sources.concat(filterSources.flatMap(item => item.displayName) ?? []);
+
+  let Authors = filterAuthors.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  if (Authors.length == 0) Authors = Authors.concat(filterAuthors.flatMap(item => item.displayName) ?? []);
 
   if (Authors.length > 0) return []; // this api doesn't support filtering by author
   let response: AxiosResponse<NewsApiOrgPosts_Response, any>;

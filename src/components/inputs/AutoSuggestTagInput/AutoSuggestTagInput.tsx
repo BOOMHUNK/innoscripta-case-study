@@ -6,7 +6,7 @@ import "./style.css";
 import { CgSpinnerAlt } from "react-icons/cg";
 import { Tag } from "@/types";
 
-export interface AutoSuggestTagInputProps {
+type AutoSuggestTagInputProps = {
   label?: string;
   placeholder?: string;
   /** Async function that returns suggestions given a query */
@@ -19,6 +19,23 @@ export interface AutoSuggestTagInputProps {
   debounceTime?: number;
 }
 
+
+
+
+
+
+/**
+ * The `AutoSuggestTagInput` component is a reusable input field that allows users to enter tags and provides auto-suggestions based on the user's input.
+ * It's used for filtering and displaying tags(categories, sources, authors) in the application.
+ * 
+ * The component takes in the following props:
+ * @param `label` - An optional label for the input field.
+ * @param `placeholder` - An optional placeholder text for the input field.
+ * @param `fetchSuggestions` - An asynchronous function that returns a list of `Tag` objects based on the user's input.
+ * @param `value` - The current list of selected tags.
+ * @param `onChange` - A callback function that is called when the selected tags change.
+ * @param `debounceTime` - An optional debounce delay in milliseconds to control the frequency of API calls for suggestions.
+ */
 export default function AutoSuggestTagInput({
   label,
   placeholder,

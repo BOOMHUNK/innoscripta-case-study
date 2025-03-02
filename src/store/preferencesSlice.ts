@@ -1,4 +1,4 @@
-import { AvailableClients, EachApiPageSize } from "@/configs";
+import { AvailableClients } from "@/configs";
 import { Tag } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -9,7 +9,6 @@ interface PreferencesState {
   categories: Tag[];
   sources: Tag[];
   authors: Tag[];
-  pageSize: number;
 }
 
 const initialState: PreferencesState = {
@@ -17,7 +16,6 @@ const initialState: PreferencesState = {
   categories: [],
   sources: [],
   authors: [],
-  pageSize: EachApiPageSize,
 };
 
 const preferencesSlice = createSlice({
@@ -43,15 +41,11 @@ const preferencesSlice = createSlice({
       state.authors = action.payload;
     },
 
-    setArticlesPerPage: (state, action: PayloadAction<number>) => {
-      state.pageSize = action.payload;
-    },
     resetPreferences: (state) => {
       state.clients = Object.keys(AvailableClients);
       state.categories = [];
       state.sources = [];
       state.authors = [];
-      state.pageSize = EachApiPageSize;
     }
   },
 });
@@ -66,7 +60,6 @@ export const {
   setPreferedAuthors,
 
 
-  setArticlesPerPage,
   resetPreferences,
 } = preferencesSlice.actions;
 export default preferencesSlice.reducer;

@@ -5,6 +5,7 @@ import { RootState } from "@/store/store";
 import useSelectedClients from "../useSelectedClients";
 import { fetchAggregatedPosts, subtractOneDay } from "@/utils";
 import useIsAnyFilterActive from "../useIsAnyFilterActive";
+import { EachApiPageSize } from "@/configs";
 
 
 
@@ -41,7 +42,7 @@ const useAggregatedNews = () => {
         clientsArray,
         pageParam, // fetch articles for this day
         queryUsed,
-        preferences.pageSize,
+        EachApiPageSize,
         startDateUsed,
         endDateUsed,
         categoriesUsed,

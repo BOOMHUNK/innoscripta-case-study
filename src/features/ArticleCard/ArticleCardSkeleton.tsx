@@ -3,7 +3,10 @@ import "./style.css";
 
 type ArticleCardSkeletonProps = {
 }
-
+/**
+ * The `ArticleCardSkeleton` component renders a skeleton UI for an article card.
+ * - It is used to provide a loading state for the article card before the actual content is available.
+ */
 const ArticleCardSkeleton = forwardRef<HTMLDivElement, ArticleCardSkeletonProps>(({ }, ref) => {
     return (
         <div className="news-article skeleton" ref={ref}>

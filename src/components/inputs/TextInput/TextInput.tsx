@@ -1,4 +1,3 @@
-// TextInput.tsx
 import { useDebounce } from "@/hooks";
 import { useState, useEffect, useDeferredValue, ChangeEvent, InputHTMLAttributes } from "react";
 import "@/components/inputs/style.css";
@@ -13,6 +12,11 @@ export type TextInputProps = {
   value?: string;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, "onChange" | "value">;
 
+
+/**
+ * Renders a text input component with optional label, icon, and debouncing behavior.
+ * The component manages the internal state of the input value and provides a debounced and deferred value to the `onChange` callback.
+ */
 export default function TextInput({
   label,
   iconElement,

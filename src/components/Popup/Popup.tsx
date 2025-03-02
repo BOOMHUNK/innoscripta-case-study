@@ -8,6 +8,15 @@ type PopupProps = {
     onClose?: () => void;
 }
 
+/**
+ * A simple popup component that renders a modal dialog with a title, content, and close functionality.
+ * 
+ * @param children - The content to be displayed inside the popup.
+ * @param title - The title to be displayed in the popup header.
+ * @param open - A boolean indicating whether the popup should be displayed or not.
+ * @param onClose - A callback function to be called when the popup is closed.
+ * @returns The rendered Popup component.
+ */
 export default function Popup({ children, title, open, onClose }: PopupProps) {
 
     return (

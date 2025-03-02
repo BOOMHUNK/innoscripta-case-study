@@ -44,6 +44,7 @@ const filtersSlice = createSlice({
       state.endDate = action.payload;
     },
     resetFilters: (state) => {
+      state.queryString = "";
       state.categories = [];
       state.sources = [];
       state.authors = [];

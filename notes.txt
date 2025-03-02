@@ -3,7 +3,7 @@ key 1: "a85611ba-364f-4d29-8181-83923f6721f0"   key 2: "2c3f16a1-5196-40b9-ab3b-
 
 
 https://newsapi.org/docs/endpoints/top-headlines 
-key 1 :"0182423da7f4464a8a7240fc492a2b24"  
+key 1 :"0182423da7f4464a8a7240fc492a2b24"   key 2: "e3c0800b8a244f0fbbd63e5e988d3274"
 
 
 https://open-platform.theguardian.com/documentation/search

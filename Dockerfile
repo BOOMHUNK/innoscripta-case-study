@@ -17,6 +17,8 @@ ENV VITE_NEWS_API_KEY="a85611ba-364f-4d29-8181-83923f6721f0"
 
 ENV VITE_NEWS_API_ORG_BASE_URL="https://newsapi.org/v2"
 ENV VITE_NEWS_API_ORG_KEY="0182423da7f4464a8a7240fc492a2b24"
+# we can use the one below if we hit the limit on the top one
+# ENV VITE_NEWS_API_ORG_KEY="e3c0800b8a244f0fbbd63e5e988d3274"
 
 ENV VITE_GUARDIAN_BASE_URL="https://content.guardianapis.com"
 # ENV VITE_GUARDIAN_KEY="test"

@@ -4,10 +4,14 @@
   background: #ffffff;
 
   padding: 0px 0px 16px 0px;
+  /* width: calc(100% - 32px); */
   width: 100%;
   min-width: 300px;
-  /* max-width: 500px; */
+  max-width: 900px;
   min-height: 300px;
+
+  margin: 32px auto;
+
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -19,6 +23,7 @@
   @media (max-width: 768px) {
     min-width: 260px;
     max-width: 100%;
+    border-radius: 0px;
   }
   &:hover {
     background-color: #ffffff;
@@ -46,8 +51,8 @@
     object-fit: cover;
     object-position: center;
     width: 100%;
-    height: 300px;
-    min-height: 300px;
+    height: 500px;
+    min-height: 500px;
     display: block;
     /* &.skeleton { */
     /* Skeleton loading effect */
@@ -96,6 +101,7 @@
       }
     }
     & .desc {
+      width: 100%;
       cursor: pointer;
       font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
       z-index: 1;
@@ -178,7 +184,7 @@
     }
     & .source {
       position: absolute;
-      top: 300px;
+      top: 500px;
       left: 16px;
       transform: translateY(-50%);
       /* background-color: #fff; */

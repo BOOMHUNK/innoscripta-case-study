@@ -3,36 +3,39 @@
   max-width: 1800px;
   margin: 0 auto;
   margin-top: 128px;
-  padding: 32px;
+  /* padding: 32px; */
   padding-top: 0;
+  padding-bottom: 64px;
   z-index: 10;
   @media (max-width: 768px) {
-    padding: 8px;
+    
   }
 
   /* & .filters {
   } */
   & .container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    /* display: grid; */
+    /* grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); */
     justify-items: center;
-    gap: 32px;
-    padding: 32px;
+    /* gap: 32px; */
+
     width: 100%;
     margin: 64px 0;
     margin-top: 0;
     border-radius: 50px;
-
+    max-width: 1200px;
+    margin: 0 auto;
     background-color: #ececec;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
       rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 
     @media (max-width: 768px) {
-      grid-template-columns: 1fr;
+      background-color: #fff;
+      /* box-shadow: none; */
+      /* grid-template-columns: 1fr; */
       border-radius: 25px;
-      gap: 16px;
+      /* gap: 16px; */
       padding: 16px 8px;
-      margin: 32px 0;
     }
   }
 
@@ -47,7 +50,7 @@
     cursor: default;
     color: #000000ad;
     transition: opacity 0.3s ease-in-out;
-    & ::selection{
+    & ::selection {
       background: none;
     }
     & .preferences-button {

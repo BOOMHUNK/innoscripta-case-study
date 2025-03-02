@@ -18,7 +18,8 @@ const fetchPostsHandler: FetchPostsHandler = async (
   filterSources = [],
   filterAuthors = [],
 ) => {
-  const Categories = filterCategories.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  let Categories = filterCategories.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  if (Categories.length == 0) Categories = Categories.concat(filterCategories.flatMap(item => item.displayName) ?? []);
 
   if (filterAuthors.length > 0) return []; // this api doesn't support filtering by author
   if (filterSources?.length > 0 && !filterSources.some(source => source.displayName.toLowerCase() == "the guardian")) return []; // this api is for the guardian as a source only
