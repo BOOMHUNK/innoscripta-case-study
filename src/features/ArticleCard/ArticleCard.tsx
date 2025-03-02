@@ -78,7 +78,7 @@ const ArticleCard = forwardRef<HTMLAnchorElement, ArticleCardProps>(
                 </div>
                 <span className="separator"></span>
                 {article.categories && article.categories.length > 0 && (
-                    <span className="category-container">
+                    <span className="category-container hidden-scrollbar">
                         {article.categories.slice(0, 4).map((category) => (
                             <Tagchip
                                 key={category.displayName}

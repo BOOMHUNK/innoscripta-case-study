@@ -8,13 +8,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-
+  overflow-x: hidden;
   & > .papernoise {
     position: fixed;
     inset: 0;
     height: 100vh;
     z-index: 0;
-
+    width: 100%;
     background: linear-gradient(
         120deg,
         rgba(0, 0, 0, 0.314) 0%,
