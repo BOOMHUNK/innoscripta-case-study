@@ -4,8 +4,6 @@ import { FetchPostsHandler, Tag } from "@/types";
 import { EachApiPageSize } from "@/configs";
 
 
-
-
 const fetchPostsHandler: FetchPostsHandler = async (
   clientName,
   baseUrl,
@@ -21,7 +19,9 @@ const fetchPostsHandler: FetchPostsHandler = async (
   filterSources = [],
   filterAuthors = [],
 ) => {
+  // first we try to put in compatible id of tags
   let Categories = filterCategories.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  // if there's not any, then we just put the display name so it may resolve to a result and if not, it doesnt return irrelevant results.
   if (Categories.length == 0) Categories = Categories.concat(filterCategories.flatMap(item => item.displayName) ?? []);
 
   let Sources = filterSources.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
@@ -104,6 +104,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
     const authors = (article.author && ([{ displayName: article.author, clientsCompatibleValues: { [clientName]: [article.author] } }] as Tag[])) || [];
     const source = (article.source && ({ displayName: article.source.name, clientsCompatibleValues: { [clientName]: [article.source.id || article.source.name] } } as Tag)) || {};
 
+    // return the transformed result (array of articles)
     return ({
       sourceClient: clientName,
       id: article.url,

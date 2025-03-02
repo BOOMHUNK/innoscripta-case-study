@@ -2,7 +2,7 @@ import axios from "axios";
 import { NewsApiPosts_Request, NewsApiPosts_Response } from "./dto";
 import { FetchPostsHandler, Tag } from "@/types";
 import { convertCategoryLabelToDisplayName } from "../utils";
-import {  MakeTagsArrayUnique } from "@/utils";
+import { MakeTagsArrayUnique } from "@/utils";
 import { EachApiPageSize } from "@/configs";
 
 
@@ -23,7 +23,9 @@ const fetchPostsHandler: FetchPostsHandler = async (
   filterSources = [],
   filterAuthors = [],
 ) => {
+  // first we try to put in compatible id of tags if there's not any,
   let Categories = filterCategories.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  // then we just put the display name so it may resolve to a result and if not, it doesnt return irrelevant results.
   if (Categories.length == 0) Categories = Categories.concat(filterCategories.flatMap(item => item.displayName) ?? []);
 
   let Sources = filterSources.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
@@ -70,7 +72,8 @@ const fetchPostsHandler: FetchPostsHandler = async (
     const authors = article.authors?.flatMap(item => ({ displayName: item.name, clientsCompatibleValues: { [clientName]: [item.uri] } } as Tag)) || [];
 
     const source = article.source && ({ displayName: article.source?.title, clientsCompatibleValues: { [clientName]: [article.source?.uri] } } as Tag);
-
+    
+    // return the transformed result (array of articles)
     return ({
       sourceClient: clientName,
       id: article.uri,

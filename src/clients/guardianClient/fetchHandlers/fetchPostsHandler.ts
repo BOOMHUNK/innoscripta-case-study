@@ -18,7 +18,9 @@ const fetchPostsHandler: FetchPostsHandler = async (
   filterSources = [],
   filterAuthors = [],
 ) => {
+  // first we try to put in compatible id of tags if there's not any, 
   let Categories = filterCategories.flatMap(item => item.clientsCompatibleValues[clientName] ?? [])
+  // then we just put the display name so it may resolve to a result and if not, it doesnt return irrelevant results.
   if (Categories.length == 0) Categories = Categories.concat(filterCategories.flatMap(item => item.displayName) ?? []);
 
   if (filterAuthors.length > 0) return []; // this api doesn't support filtering by author
@@ -61,6 +63,7 @@ const fetchPostsHandler: FetchPostsHandler = async (
     const categories = (article.sectionName && [{ displayName: article.sectionName, clientsCompatibleValues: { [clientName]: [article.sectionId] } }] || []);
     const source = { displayName: "The Guardian", clientsCompatibleValues: { [clientName]: ["the guardian"] } } as Tag;
 
+    // return the transformed result (array of articles)
     return ({
       sourceClient: clientName,
       id: article.id,
