@@ -1,4 +1,4 @@
-# Innoscripta Case Study Assignment
+# innoscripta Case Study Assignment
 
 A scalable news aggregator implemented for innoscripta frontend developer case study assignment.
 
