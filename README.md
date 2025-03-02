@@ -6,10 +6,9 @@ A scalable news aggregator implemented for innoscripta frontend developer case s
 I designed the app to fetch articles from multiple news APIsin flexible enough to be able to easily extend and add any other API sources.
 
 - The project emphasizes modularity and scalability, performance, and maintainability.
-I hope U enjoy my work results cause I love it.
 
 
-![screenshot](image.png)
+![screenshot](image-1.png)
 ## Overview
 
 **Current API Sources:**
