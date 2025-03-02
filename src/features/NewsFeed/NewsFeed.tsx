@@ -16,7 +16,7 @@ export default function NewsFeed({ }: NewsFeedProps) {
     // Flatten paginated data into a single articles array
     const articles = data?.pages.flat() || [];
 
-    const ITEM_HEIGHT = 632; // fixed height per ArticleCard (including margin)
+    const ITEM_HEIGHT = 622; // fixed height per ArticleCard (including margin)
     const BUFFER = 5; // number of extra items above and below the viewport
 
     // Setup window virtualizer based on window scroll
